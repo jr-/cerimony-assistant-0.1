@@ -1,10 +1,12 @@
 package tcc.cerimony_assistant_v01;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -52,6 +54,18 @@ public class ListNewCerimoniesFragment extends Fragment {
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.listview_newcerimonies);
         listView.setAdapter(mNewCerimoniesAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String cerimonyFileName = mNewCerimoniesAdapter.getItem(position);
+
+                //CerimonyXmlPullParser.getCerimonyFromFile(ListNewCerimonies.this);
+
+                Intent intent = new Intent(getActivity(), CerimonyDetails.class)
+                        .putExtra(Intent.EXTRA_TEXT, cerimonyFileName);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }

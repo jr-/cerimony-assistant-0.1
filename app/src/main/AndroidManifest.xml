@@ -18,6 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CerimonyDetails"
+            android:label="@string/title_activity_cerimony_details"
+            android:parentActivityName=".ListNewCerimonies"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tcc.cerimony_assistant_v01.ListNewCerimonies" />
+        </activity>
     </application>
 
 </manifest>
