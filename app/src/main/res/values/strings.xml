@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">cerimony-assistant-v0.1</string>
+    <string name="action_settings">Settings</string>
+    <string name="list_new_cerimonies_name">Lista de Novas Cerimonias</string>
+</resources>

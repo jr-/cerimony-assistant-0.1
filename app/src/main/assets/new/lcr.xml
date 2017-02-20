@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cerimony>
+    <name>Emissão LCR #7 da AC Raiz ICPEDU v2</name>
+    <creation_date>07/04/2014</creation_date>
+    <initial_date>09/04/2014 14:47</initial_date>
+    <final_date>09/04/2014 15:35</final_date>
+    <local>Sala cofre da UFSC</local>
+    <participant id="011" creator="yes">
+        <name>Anderson Luiz Silvério</name>
+        <cargo>Operador do GOPAC</cargo>
+        <unidade>LABSEC</unidade>
+        <email>anderson.luiz@inf.ufsc.br</email>
+    </participant>
+    <participant id="012" editor="yes">
+        <name>José Ruas</name>
+        <cargo>Operador do GOPAC</cargo>
+        <unidade>LABSEC</unidade>
+        <email>jose.ruas@inf.ufsc.br</email>
+    </participant>
+    <participant id="013">
+        <name>Vilton Wronski Ricardo</name>
+        <cargo>Auditor</cargo>
+        <unidade>UFSC</unidade>
+        <email>vilton.ricardo@ufsc.br</email>
+    </participant>
+    <participant id="014">
+        <name>Paulo Morganti Alcaraz</name>
+        <cargo>Auditor</cargo>
+        <unidade>UFSC</unidade>
+        <email>paulo.alcaraz@ufsc.br</email>
+    </participant>
+    <steps>
+        <step id="0" name="Verificação de pré-requisitos">
+            <description>Verificação de pré-requisitos básicos</description>
+            <inputs type="roll_list">
+                <input >smartcards</input>
+                <input  observation="O HSM deve ser desligado da tomada antes de ser transportado SERIALNUMBER">HSM</input>
+                <input >pendrive</input>
+            </inputs>
+            <outputs type="column_list">
+                <output type="2_entry" required="yes">smartcards</output>
+                <output type="checkbox">HSM</output>
+                <output type="checkbox">pendrive</output>
+            </outputs>
+            <observation>Seguir as observações do HSM</observation>
+        </step>
+        <step id ="1" name="Presença">
+            <description>Conferência da Lista de Presença</description>
+            <outputs>
+                <output type="entry_roll_list" required="yes">Presença</output>
+            </outputs>
+            <observation>O controle de acesso a cerimônia será detalhado apenas para quem participa presencialmente e local</observation>
+        </step>
+        <step id="2" name="Entrega dos envelopes">
+            <description>Entrega dos envelopes aos membros dos grupos</description>
+            <inputs>
+                <input>Envelopes lacrados com smartcards, PINs e backup de PINs</input>
+            </inputs>
+            <outputs>
+                <output>Cada envelope de posse da respectiiva pessoa/papel a ser desempenhado</output>
+            </outputs>
+        </step>
+        <step id="3" name="Dispositivos em operação">
+            <description>Colocar a máquina hospedeira e o HSM em operação</description>
+            <inputs>
+                <input>Máquina hospedeira pré-configurada. Máquina hospedeira e HSMs não bootados. Envelopes com usuário e senha de acesso ao SO. Envelopes com smartcards e PINs já distribuidos. Datashow, pen drive.</input>
+            </inputs>
+            <outputs>
+                <output>Máquina hospedeira e HSMs bootados.</output>
+            </outputs>
+            <observation>Os equipamentos com a AC Raiz e o HSM devem ser ligados e disponibilizados aos operadores. Login na máquina hospedeira com usuário e senha criado na cerimônia da AC Raiz.</observation>
+        </step>
+        <step id="4" name="Relógio da máquina hospedeira">
+            <description>Acertar relógio da máquina hospedeira</description>
+            <inputs>
+                <input>Relógio da máquina sincronizado com Observatório Nacional. Usar website: www.on.br</input>
+            </inputs>
+            <outputs>
+                <output>Máquina hospedeira com relógio atualizado, em horário UTC.</output>
+            </outputs>
+            <observation>Verificar e se necessário, acertar o relógio da máquina hospedeira, em horário UTC(sem aplicação de timezone)</observation>
+        </step>
+        <step id="5" name="Inicializar VMWare Player">
+            <description>Inicializar VMWare Player</description>
+            <inputs>
+                <input>Ir na opção Aplicativos -> Sistema -> VMWare Player</input>
+            </inputs>
+            <outputs>
+                <output>VMWare player inicializado</output>
+            </outputs>
+        </step>
+        <step id="6" name="Inicializar VM AC Raiz">
+            <description>Inicializar VM AC Raiz ICPEDU v2</description>
+            <inputs>
+                <input>Selecionar Ubuntu_AC_Raiz_ICPEDU_V2 e clicar em "Play virtual machine"</input>
+            </inputs>
+            <outputs>
+                <output>Máquina virtual inicializada</output>
+            </outputs>
+        </step>
+        <step id="7" name="Ajustar relógio da VM">
+            <description>Ajustar relógio da máquina virtual</description>
+            <inputs>
+                <input>Relógio de máquina sincronizada com Observatório Nacional</input>
+            </inputs>
+            <outputs>
+                <output>Máquina hospedeira com relógio atualizado em horário UTC</output>
+            </outputs>
+        </step>
+        <step id="8" name="Acertar relógio do HSM operacional">
+            <description>Acertar relógio do HSM operacional</description>
+        </step>
+        <step id="9" name="Liberar a chave privada">
+            <description>Liberar a chave privada da AC Raiz para uso</description>
+        </step>
+        <step id="10" name="Criar pasta na máquina virtual">
+            <description>Criar pasta na máquina virtual</description>
+        </step>
+        <step id="11" name="Emitir a LCR">
+            <description>Emitir a LCR</description>
+        </step>
+        <step id="12" name="Download da LCR">
+            <description>Download da LCR</description>
+        </step>
+        <step id="13" name="Descarregar a chave da AC Raiz">
+            <description>Descarregar a chave da AC Raiz</description>
+        </step>
+        <step id="14" name="Fazer backup do HSM">
+            <description>Fazer backup do HSM</description>
+        </step>
+        <step id="15" name="Desligar o HSM">
+        </step>
+        <step id="16" name="Fazer backup do SGCI">
+        </step>
+        <step id="17" name="Copiar Pasta">
+            <description>Copiar Pasta dos arquivos da cerimonia em pendrive</description>
+        </step>
+        <step id="18" name="Desligar a Máquina Virtual">
+        </step>
+        <step id="19" name="Desligar a Máquina Hospedeira">
+        </step>
+        <step id="20" name="Guardar novamente os smartcards">
+        </step>
+        <step id="21" name="Fechamento da Ata">
+        </step>
+    </steps>
+</cerimony>
