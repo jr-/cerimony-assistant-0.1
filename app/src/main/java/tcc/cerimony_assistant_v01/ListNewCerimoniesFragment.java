@@ -59,8 +59,6 @@ public class ListNewCerimoniesFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String cerimonyFileName = mNewCerimoniesAdapter.getItem(position);
 
-                //CerimonyXmlPullParser.getCerimonyFromFile(ListNewCerimonies.this);
-
                 Intent intent = new Intent(getActivity(), CerimonyDetails.class)
                         .putExtra(Intent.EXTRA_TEXT, cerimonyFileName);
                 startActivity(intent);

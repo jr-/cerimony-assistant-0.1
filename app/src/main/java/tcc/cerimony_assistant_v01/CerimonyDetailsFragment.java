@@ -25,8 +25,9 @@ public class CerimonyDetailsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             String cerimonyFileName = intent.getStringExtra(Intent.EXTRA_TEXT);
-            ((TextView) rootView.findViewById(R.id.cerimonydetails_text))
-                    .setText(cerimonyFileName);
+            Cerimony selectedCerimony = CerimonyXmlPullParser.getCerimonyFromFile(getActivity(), "new/"+cerimonyFileName);
+            ((TextView) rootView.findViewById(R.id.cerimonydetails_name))
+            .setText(selectedCerimony.getCName());
         }
 
         return rootView;
