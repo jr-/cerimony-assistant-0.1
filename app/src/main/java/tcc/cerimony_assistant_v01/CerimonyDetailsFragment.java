@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -23,12 +24,26 @@ public class CerimonyDetailsFragment extends Fragment {
 
         // The detail Activity called via intent.  Inspect the intent for forecast data.
         Intent intent = getActivity().getIntent();
+        String cerimonyPath = "";
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             String cerimonyFileName = intent.getStringExtra(Intent.EXTRA_TEXT);
+            cerimonyPath = "new/"+cerimonyFileName;
             Cerimony selectedCerimony = CerimonyXmlPullParser.getCerimonyFromFile(getActivity(), "new/"+cerimonyFileName);
             ((TextView) rootView.findViewById(R.id.cerimonydetails_name))
             .setText(selectedCerimony.getCName());
         }
+
+        Button btn = (Button) rootView.findViewById(R.id.start_cerimony_button);
+        final String finalCerimonyPath = cerimonyPath;
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ExecuteSteps.class);
+                intent.putExtra("PATH", finalCerimonyPath);
+                intent.putExtra("STEPNUMBER", 0);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }

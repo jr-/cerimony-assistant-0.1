@@ -27,6 +27,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tcc.cerimony_assistant_v01.ListNewCerimonies" />
         </activity>
+        <activity
+            android:name=".ExecuteSteps"
+            android:label="@string/title_activity_execute_steps"
+            android:parentActivityName=".CerimonyDetails"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tcc.cerimony_assistant_v01.CerimonyDetails" />
+        </activity>
     </application>
 
 </manifest>

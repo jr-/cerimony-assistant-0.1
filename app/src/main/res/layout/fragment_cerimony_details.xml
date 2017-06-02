@@ -12,7 +12,7 @@
     tools:showIn="@layout/activity_cerimony_details">
 
     <TextView
-        android:text="TextView"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cerimonydetails_name"
@@ -25,7 +25,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/button" />
-
-
+        android:id="@+id/start_cerimony_button" />
 </RelativeLayout>
