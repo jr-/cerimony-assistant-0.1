@@ -22,8 +22,7 @@ import tcc.cerimony_assistant_v01.Cerimony;
 
 public class CerimonyXmlPullParser {
 
-    public static Cerimony getCerimonyFromFile(Context ctx, String filePath) {
-        Cerimony cerimony = new Cerimony();
+    public static Cerimony getCerimonyFromFile(Context ctx, String filePath, Cerimony cerimony) {
         String creator;
         String curText = "";
         try {

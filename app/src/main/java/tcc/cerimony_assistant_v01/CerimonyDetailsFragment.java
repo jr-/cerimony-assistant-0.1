@@ -25,22 +25,26 @@ public class CerimonyDetailsFragment extends Fragment {
         // The detail Activity called via intent.  Inspect the intent for forecast data.
         Intent intent = getActivity().getIntent();
         String cerimonyPath = "";
+        String cerimonyFileName = "";
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            String cerimonyFileName = intent.getStringExtra(Intent.EXTRA_TEXT);
+            cerimonyFileName = intent.getStringExtra(Intent.EXTRA_TEXT);
             cerimonyPath = "new/"+cerimonyFileName;
-            Cerimony selectedCerimony = CerimonyXmlPullParser.getCerimonyFromFile(getActivity(), "new/"+cerimonyFileName);
+            Cerimony cerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyFileName);
+            cerimony = CerimonyXmlPullParser.getCerimonyFromFile(getActivity(), "new/"+cerimonyFileName, cerimony);
             ((TextView) rootView.findViewById(R.id.cerimonydetails_name))
-            .setText(selectedCerimony.getCName());
+            .setText(cerimony.getCName());
         }
 
         Button btn = (Button) rootView.findViewById(R.id.start_cerimony_button);
         final String finalCerimonyPath = cerimonyPath;
+        final String finalCerimonyFileName = cerimonyFileName;
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ExecuteSteps.class);
                 intent.putExtra("PATH", finalCerimonyPath);
                 intent.putExtra("STEPNUMBER", 0);
+                intent.putExtra("NAME", finalCerimonyFileName);
                 startActivity(intent);
             }
         });

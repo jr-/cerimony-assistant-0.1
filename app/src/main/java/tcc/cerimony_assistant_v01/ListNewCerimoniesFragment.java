@@ -38,6 +38,8 @@ public class ListNewCerimoniesFragment extends Fragment {
 
 
         List<String> newCerimoniesList = new ArrayList<String>(Arrays.asList(fileNames));
+        //instancia o singleton
+        CCerimonies.getInstance().setCerimonies(newCerimoniesList);
 
         // Now that we have some dummy forecast data, create an ArrayAdapter.
         // The ArrayAdapter will take data from a source (like our dummy forecast) and

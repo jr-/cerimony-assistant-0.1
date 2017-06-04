@@ -16,6 +16,8 @@ public class Cerimony {
     private List<Participant> participants = new ArrayList<Participant>();
     private List<Step> steps = new ArrayList<Step>();
 
+    public Cerimony() {}
+
     public String getCName() {
         return name;
     }
