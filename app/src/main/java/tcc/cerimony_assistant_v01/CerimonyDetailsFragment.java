@@ -36,14 +36,15 @@ public class CerimonyDetailsFragment extends Fragment {
         }
 
         Button btn = (Button) rootView.findViewById(R.id.start_cerimony_button);
-        final String finalCerimonyPath = cerimonyPath;
+        final String finalCerimonyNewPath = cerimonyPath;
+        final String finalCerimonyLoadedPath = "load/"+cerimonyFileName;
         final String finalCerimonyFileName = cerimonyFileName;
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ExecuteSteps.class);
-                intent.putExtra("PATH", finalCerimonyPath);
-                intent.putExtra("STEPNUMBER", 0);
+                intent.putExtra("NEW_PATH", finalCerimonyNewPath);
+                intent.putExtra("LOAD_PATH", finalCerimonyLoadedPath);
                 intent.putExtra("NAME", finalCerimonyFileName);
                 startActivity(intent);
             }

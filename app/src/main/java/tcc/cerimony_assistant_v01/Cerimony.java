@@ -12,6 +12,25 @@ public class Cerimony {
     private String creationDate;
     private String initialDate;
     private String finalDate;
+    private String initialTime;
+    private String finalTime;
+
+    public String getInitialTime() {
+        return initialTime;
+    }
+
+    public void setInitialTime(String initialTime) {
+        this.initialTime = initialTime;
+    }
+
+    public String getFinalTime() {
+        return finalTime;
+    }
+
+    public void setFinalTime(String finalTime) {
+        this.finalTime = finalTime;
+    }
+
     private String local;
     private List<Participant> participants = new ArrayList<Participant>();
     private List<Step> steps = new ArrayList<Step>();
