@@ -14,7 +14,7 @@ public class Step {
     private String inputType;
     private String outputType;
     private String observation;
-    private List<String> input = new ArrayList<String>();
+    private List<Input> inputs = new ArrayList<Input>();
     private List<String> output = new ArrayList<String>(); //TODO necessario add os atributos dos outputs e inputs
 
 
@@ -66,12 +66,12 @@ public class Step {
         this.observation = observation;
     }
 
-    public List<String> getInput() {
-        return input;
+    public List<Input> getInputs() {
+        return inputs;
     }
 
-    public void setInput(List<String> input) {
-        this.input = input;
+    public void setInputs(List<Input> inputs) {
+        this.inputs = inputs;
     }
 
     public List<String> getOutput() {

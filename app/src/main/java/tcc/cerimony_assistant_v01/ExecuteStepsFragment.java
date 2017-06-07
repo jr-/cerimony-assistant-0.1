@@ -35,25 +35,18 @@ public class ExecuteStepsFragment extends Fragment {
             final int stepNumber = intent.getIntExtra("STEPNUMBER", 0);
             final String cerimonyName = intent.getStringExtra("NAME");
             fstepNumber = stepNumber;
+
             Cerimony selectedCerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyName);
-            //Cerimony selectedCerimony = CerimonyXmlPullParser.getCerimonyFromFile(getActivity(), cerimonyPath);
             final List<Step> steps = selectedCerimony.getSteps();
             curStep = steps.get(stepNumber);
 
+
             final TextView mTextView = ((TextView) rootView.findViewById(R.id.description_text));
             mTextView.setText(curStep.getDescription());
-            final LinearLayout lm = ((LinearLayout) rootView.findViewById(R.id.linear1));
 
-            List<String> inputs = curStep.getInput();
+            List<Input> inputs = curStep.getInputs();
             Log.v("inputs", ""+inputs.size());
-            if(inputs.size() > 0){
-                for (int i=0; i < inputs.size(); i++) {
-                    CheckBox cb = new CheckBox(getActivity());
-                    cb.setId(i+1);
-                    cb.setText(inputs.get(i));
-                    lm.addView(cb);
-                }
-            }
+
 
             Button nextBtn = (Button) rootView.findViewById(R.id.next_step_button);
             Log.v("stepsize", ""+steps.size());
@@ -61,12 +54,29 @@ public class ExecuteStepsFragment extends Fragment {
                 //            @Override
                 public void onClick(View v) {
                     fstepNumber++;
+                    curStep = steps.get(fstepNumber);
 
-                    Intent intent = new Intent(getActivity(), ExecuteSteps.class);
-                    intent.putExtra("PATH", cerimonyPath);
-                    intent.putExtra("STEPNUMBER", fstepNumber);
-                    intent.putExtra("NAME", cerimonyName);
-                    startActivity(intent);
+                    LinearLayout lm = ((LinearLayout) rootView.findViewById(R.id.linear1));
+                    //deleting previous step view elements
+                    if(lm.getChildCount() > 0)
+                        lm.removeAllViews();
+
+                    TextView mTextView = ((TextView) rootView.findViewById(R.id.description_text));
+                    mTextView.setText(curStep.getDescription());
+
+                    List<Input> inputs = curStep.getInputs();
+                    Log.v("inputs", ""+inputs.size());
+
+                    if(inputs.size() > 0){
+                        for (int i=0; i < inputs.size(); i++) {
+                            if("text".equalsIgnoreCase(inputs.get(i).getType())){
+                                TextView tv = new TextView(getActivity());
+                                tv.setId(i);
+                                tv.setText(inputs.get(i).getText());
+                                lm.addView(tv);
+                            }
+                        }
+                    }
                 }
             });
         }
