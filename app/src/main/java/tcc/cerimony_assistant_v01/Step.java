@@ -14,6 +14,16 @@ public class Step {
     private String inputType;
     private String outputType;
     private String observation;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    private String time;
     private List<Input> inputs = new ArrayList<Input>();
     private List<String> output = new ArrayList<String>(); //TODO necessario add os atributos dos outputs e inputs
 

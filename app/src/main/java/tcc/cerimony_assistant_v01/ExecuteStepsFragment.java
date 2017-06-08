@@ -1,6 +1,7 @@
 package tcc.cerimony_assistant_v01;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,7 +52,7 @@ public class ExecuteStepsFragment extends Fragment {
             //make a copy of the selected ceremony file xml in assets/new to sdcard
 
 
-            Cerimony selectedCerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyName);
+            final Cerimony selectedCerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyName);
 
             //set date to start_ceremony_date and hour
             Calendar cal = Calendar.getInstance();
@@ -67,24 +68,40 @@ public class ExecuteStepsFragment extends Fragment {
             curStep = steps.get(stepNumber);
 
             //dinamically modify GUI to step(0)
+            getActivity().setTitle(selectedCerimony.getShortName() + " @ "+ "Passo "+stepNumber);
             final TextView mTextView = ((TextView) rootView.findViewById(R.id.description_text));
             mTextView.setText(curStep.getDescription());
 
             List<Input> inputs = curStep.getInputs();
 
-            Button nextBtn = (Button) rootView.findViewById(R.id.next_step_button);
+            final Button nextBtn = (Button) rootView.findViewById(R.id.next_step_button);
             Log.v("stepsize", ""+steps.size());
             nextBtn.setOnClickListener(new View.OnClickListener() {
                 //            @Override
                 public void onClick(View v) {
+                    //logic to save in the xml
+                    long msTime = System.currentTimeMillis();
+                    Date curDateTime = new Date(msTime);
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(curDateTime);
+                    String curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+                    curStep.setTime(curTime);
+
+                    //dinamically modify GUI to step(1) at step(size-1)
                     stepNumber++;
                     if(stepNumber < steps.size()-1){
                         curStep = steps.get(stepNumber);
 
-                        LinearLayout lm = ((LinearLayout) rootView.findViewById(R.id.linear1));
+                        getActivity().setTitle(selectedCerimony.getShortName() + " @ "+ "Passo "+stepNumber);
+                        LinearLayout li = ((LinearLayout) rootView.findViewById(R.id.linear_entradas));
                         //deleting previous step view elements
-                        if(lm.getChildCount() > 0)
-                            lm.removeAllViews();
+                        if(li.getChildCount() > 0)
+                            li.removeAllViews();
+
+                        LinearLayout lo = ((LinearLayout) rootView.findViewById(R.id.linear_saidas));
+                        //deleting previous step view elements
+                        if(lo.getChildCount() > 0)
+                            lo.removeAllViews();
 
                         TextView mTextView = ((TextView) rootView.findViewById(R.id.description_text));
                         mTextView.setText(curStep.getDescription());
@@ -97,13 +114,25 @@ public class ExecuteStepsFragment extends Fragment {
                                 if("text".equalsIgnoreCase(inputs.get(i).getType())){
                                     TextView tv = new TextView(getActivity());
                                     tv.setId(i);
-                                    tv.setText(inputs.get(i).getText());
-                                    lm.addView(tv);
+                                    tv.setText("\u2022 "+inputs.get(i).getText());
+                                    li.addView(tv);
                                 }
                             }
                         }
+                        List<String> outputs = curStep.getOutput();
+                        if(outputs.size() > 0){
+                            for (int i=0; i < outputs.size(); i++) {
+                                TextView tv = new TextView(getActivity());
+                                tv.setId(inputs.size()+i);
+                                tv.setText("\u2022 "+outputs.get(i));
+                                lo.addView(tv);
+                            }
+                        }
                     } else if(stepNumber == steps.size()-1){
-
+                        nextBtn.setBackgroundColor(Color.GREEN);
+                        nextBtn.setText("Finalizar");
+                    } else {
+                        //end of ceremony, save, feedbackmessage in the initial activity?
                     }
                 }
             });

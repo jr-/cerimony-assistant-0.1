@@ -57,6 +57,8 @@ public class CerimonyXmlPullParser {
                             cerimony.setFinalDate(curText);
                         } else if (tagname.equalsIgnoreCase("local")) {
                             cerimony.setLocal(curText);
+                        } else if (tagname.equalsIgnoreCase("short_name")) {
+                            cerimony.setShortName(curText);
                         }
                         break;
                     default:

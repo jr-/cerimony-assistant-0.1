@@ -9,10 +9,20 @@ import java.util.List;
 
 public class Cerimony {
     private String name;
+    private String shortName;
     private String creationDate;
     private String initialDate;
     private String finalDate;
     private String initialTime;
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
     private String finalTime;
 
     public String getInitialTime() {
