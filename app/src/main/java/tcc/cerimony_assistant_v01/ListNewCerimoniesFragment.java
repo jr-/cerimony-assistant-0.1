@@ -1,6 +1,7 @@
 package tcc.cerimony_assistant_v01;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,15 +31,22 @@ public class ListNewCerimoniesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String[] fileNames = new String[0];
-        try {
-            fileNames = getActivity().getAssets().list("new");
-        } catch (IOException e) {
-            e.printStackTrace();
+//        String[] fileNames = new String[0];
+//        try {
+//            fileNames = getActivity().getAssets().list("new");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        List<String> newCerimoniesList = new ArrayList<String>(Arrays.asList(fileNames));
+        List<String> newCerimoniesList = new ArrayList<>();
+        String root_sd = Environment.getExternalStorageDirectory().toString();
+        File file = new File(root_sd + "/ceremony-assistant/new/");
+        File list[] = file.listFiles();
+        for( int i=0; i < list.length; i++) {
+            newCerimoniesList.add(list[i].getName());
         }
-
-
-        List<String> newCerimoniesList = new ArrayList<String>(Arrays.asList(fileNames));
         //instancia o singleton
         CCerimonies.getInstance().setCerimonies(newCerimoniesList);
 

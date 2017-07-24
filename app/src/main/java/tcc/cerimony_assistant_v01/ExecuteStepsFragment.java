@@ -2,6 +2,8 @@ package tcc.cerimony_assistant_v01;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -133,11 +135,50 @@ public class ExecuteStepsFragment extends Fragment {
                         nextBtn.setText("Finalizar");
                     } else {
                         //end of ceremony, save, feedbackmessage in the initial activity?
+                        File file;
+
+                        cal = Calendar.getInstance();
+                        cal.setTime(curDateTime);
+                        curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+                        String curDate = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.YEAR);
+
+                        selectedCerimony.setFinalDate(curDate);
+                        selectedCerimony.setFinalTime(curTime);
+
+                        if(isExternalStorageWritable()) {
+                            String root_sd = Environment.getExternalStorageDirectory().toString();
+                            File dir = new File(root_sd + "/ceremony-assistant/load/");
+                            dir.mkdirs();
+                            try {
+                                file = new File(dir, selectedCerimony.getShortName().replaceAll("\\s","") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".xml");
+                                file.createNewFile();
+                                FileOutputStream f = new FileOutputStream(file);
+                                String xmlData = selectedCerimony.toXML();
+                                f.write(xmlData.getBytes());
+                                f.close();
+                                //send the information about the new file and folders to scanner
+                                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                                intent.setData(Uri.fromFile(file));
+                                getActivity().sendBroadcast(intent);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
                     }
                 }
             });
         }
 
         return rootView;
+    }
+
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -102,4 +102,49 @@ public class Cerimony {
     public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
+
+    public String toXML() {
+
+        String cerimony = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                  + "<cerimony>\n"
+                  + "\t<name>" + name + "</name>\n"
+                  + "\t<short_name>" + shortName + "</short_name>\n"
+                  + "\t<creation_date>" + creationDate + "</creation_date>\n"
+                  + "\t<initial_date>" + initialDate + "</initial_date>\n"
+                  + "\t<final_date>" + finalDate + "</final_date>\n"
+                  + "\t<initial_time>" + initialTime + "</initial_time>\n"
+                  + "\t<final_time>" + finalTime + "</final_time>\n"
+                  + "\t<local>" + local + "</local>\n";
+
+        for(int i = 0; i < participants.size(); i++) {
+            cerimony += "\t<participant>\n"
+                      + "\t\t<name>" + participants.get(i).getPName() + "</name>\n"
+                      + "\t\t<cargo>" + participants.get(i).getCargo() + "</cargo>\n"
+                      + "\t\t<unidade>" + participants.get(i).getUnidade() + "</unidade>\n"
+                      + "\t\t<email>" + participants.get(i).getEmail() + "</email>\n"
+                      + "\t</participant>\n";
+        }
+        cerimony += "\t<steps>\n";
+        for(int i = 0; i < steps.size(); i++) {
+            cerimony += "\t\t<step " + "time=\"" + steps.get(i).getTime() + "\">\n"
+                      + "\t\t\t<description>" + steps.get(i).getDescription() + "</description>\n"
+                      + "\t\t\t<inputs>\n";
+            for(int j = 0; j < steps.get(i).getInputs().size(); j++) {
+                cerimony += "\t\t\t\t<input type=\"" + steps.get(i).getInputs().get(j).getType()
+                         + "\" resume=\"" + steps.get(i).getInputs().get(j).getResume() + "\">"
+                         + steps.get(i).getInputs().get(j).getText() + "</input>\n";
+            }
+            cerimony += "\t\t\t</inputs>\n"
+                      + "\t\t\t<outputs>\n";
+            for(int k = 0; k < steps.get(i).getOutput().size(); k++) {
+                cerimony += "\t\t\t\t<output>" + steps.get(i).getOutput().get(k) + "</output>\n";
+            }
+            cerimony += "\t\t\t</outputs>\n"
+                      + "\t\t\t<observation>" + steps.get(i).getObservation() + "</observation>\n"
+                      + "\t\t</step>\n";
+        }
+        cerimony += "\t</steps>\n"
+                  + "</cerimony>\n";
+        return cerimony;
+    }
 }
