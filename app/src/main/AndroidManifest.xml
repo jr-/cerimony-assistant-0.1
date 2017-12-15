@@ -11,7 +11,8 @@
         <activity
             android:name=".ListNewCerimonies"
             android:label="@string/list_new_cerimonies_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +23,8 @@
             android:name=".CerimonyDetails"
             android:label="@string/title_activity_cerimony_details"
             android:parentActivityName=".ListNewCerimonies"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="sensorLandscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tcc.cerimony_assistant_v01.ListNewCerimonies" />
@@ -31,7 +33,8 @@
             android:name=".ExecuteSteps"
             android:label="@string/title_activity_execute_steps"
             android:parentActivityName=".CerimonyDetails"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="sensorLandscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tcc.cerimony_assistant_v01.CerimonyDetails" />
