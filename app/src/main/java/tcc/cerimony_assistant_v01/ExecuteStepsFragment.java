@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -75,6 +76,36 @@ public class ExecuteStepsFragment extends Fragment {
             mTextView.setText(curStep.getDescription());
 
             List<Input> inputs = curStep.getInputs();
+            LinearLayout li = ((LinearLayout) rootView.findViewById(R.id.linear_entradas));
+            if(inputs.size() > 0){
+                for (int i=0; i < inputs.size(); i++) {
+                    if("text".equalsIgnoreCase(inputs.get(i).getType())){
+                        TextView tv = new TextView(getActivity());
+                        tv.setId(i);
+                        tv.setText("\u2022 "+inputs.get(i).getText());
+                        li.addView(tv);
+                    }
+                }
+            }
+            List<String> outputs = curStep.getOutput();
+            LinearLayout lo = ((LinearLayout) rootView.findViewById(R.id.linear_saidas));
+
+            if(outputs.size() > 0){
+                for (int i=0; i < outputs.size(); i++) {
+                    TextView tv = new TextView(getActivity());
+                    tv.setId(inputs.size()+i);
+                    tv.setText("\u2022 "+outputs.get(i));
+                    lo.addView(tv);
+                }
+            }
+            String observation = curStep.getObservation();
+            LinearLayout lobs = ((LinearLayout) rootView.findViewById(R.id.linear_observation));
+
+            EditText et = new EditText(getActivity());
+            et.setId(stepNumber);
+            et.setTag("observation");
+            et.setText(observation);
+            lobs.addView(et);
 
             final Button nextBtn = (Button) rootView.findViewById(R.id.next_step_button);
             Log.v("stepsize", ""+steps.size());
@@ -82,12 +113,19 @@ public class ExecuteStepsFragment extends Fragment {
                 //            @Override
                 public void onClick(View v) {
                     //logic to save in the xml
+                    //set Time and set Observation
                     long msTime = System.currentTimeMillis();
                     Date curDateTime = new Date(msTime);
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(curDateTime);
                     String curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
                     curStep.setTime(curTime);
+
+                    EditText etPrevStep = ((EditText) rootView.findViewWithTag("observation"));
+                    String etPrevStepContent = etPrevStep.getText().toString();
+                    if (etPrevStepContent != null) {
+                        curStep.setObservation(etPrevStepContent);
+                    }
 
                     //dinamically modify GUI to step(1) at step(size-1)
                     stepNumber++;
@@ -104,6 +142,11 @@ public class ExecuteStepsFragment extends Fragment {
                         //deleting previous step view elements
                         if(lo.getChildCount() > 0)
                             lo.removeAllViews();
+
+                        LinearLayout lobs = ((LinearLayout) rootView.findViewById(R.id.linear_observation));
+                        //deleting previous step view elements
+                        if(lobs.getChildCount() > 0)
+                            lobs.removeAllViews();
 
                         TextView mTextView = ((TextView) rootView.findViewById(R.id.description_text));
                         mTextView.setText(curStep.getDescription());
@@ -130,6 +173,12 @@ public class ExecuteStepsFragment extends Fragment {
                                 lo.addView(tv);
                             }
                         }
+                        String observation = curStep.getObservation();
+                        EditText et = new EditText(getActivity());
+                        et.setId(stepNumber);
+                        et.setTag("observation");
+                        et.setText(observation);
+                        lobs.addView(et);
                     } else if(stepNumber == steps.size()-1){
                         nextBtn.setBackgroundColor(Color.GREEN);
                         nextBtn.setText("Finalizar");
