@@ -36,13 +36,13 @@ public class ListStepsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        Cerimony cerimony = CCerimonies.getInstance().getSelectedCerimony();
+        Cerimony cerimony = CCerimonies.getInstance().getSelectedCerimony();
         List<String> stepsList = new ArrayList<>();
-//        List<Step> steps = cerimony.getSteps();
-//        for ( int i=0; i < steps.size(); i++) {
-//            stepsList.add(steps.get(i).getSName());
-//        }
-        stepsList.add("teste");
+        List<Step> steps = cerimony.getSteps();
+        for ( int i=0; i < steps.size(); i++) {
+            String stepName = steps.get(i).getSName();
+            stepsList.add(stepName);
+        }
 
         mListStepsAdapter =
                 new ArrayAdapter<String>(
