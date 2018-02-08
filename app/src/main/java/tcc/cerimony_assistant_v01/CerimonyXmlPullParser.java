@@ -120,10 +120,8 @@ public class CerimonyXmlPullParser {
 
                 if ("step".equalsIgnoreCase(tagname) && eventType == XmlPullParser.START_TAG) {
                     Step curStep = new Step();
-                    String stepName = xpp.getAttributeValue(null, "name");
-                    curStep.setSName(stepName);
-
                     while (!("step".equalsIgnoreCase(tagname) && eventType == XmlPullParser.END_TAG)) {
+
                         if ("inputs".equalsIgnoreCase(tagname) && eventType == XmlPullParser.START_TAG) {
                             List<Input> inputs = new ArrayList<Input>();
                             eventType = xpp.next();
@@ -207,7 +205,6 @@ public class CerimonyXmlPullParser {
                         eventType = xpp.next();
                         tagname = xpp.getName();
                     }
-
                     steps.add(curStep);
                 }
                 eventType = xpp.next();

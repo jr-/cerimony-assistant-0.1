@@ -7,39 +7,21 @@
     android:fitsSystemWindows="true"
     tools:context="tcc.cerimony_assistant_v01.ExecuteSteps">
 
-    <RelativeLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            android:id="@+id/layout_toolbar">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </android.support.design.widget.AppBarLayout>
 
-        </android.support.design.widget.AppBarLayout>
-
-        <LinearLayout
-            android:layout_below="@+id/layout_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:baselineAligned="false">
-
-            <include
-                layout="@layout/content_list_steps" />
-            <include layout="@layout/content_execute_steps" />
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
+    <include layout="@layout/content_execute_steps" />
 
 
 </android.support.design.widget.CoordinatorLayout>
