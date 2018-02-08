@@ -4,7 +4,4 @@
     <string name="list_new_cerimonies_name">Lista de Novas Cerimonias</string>
     <string name="title_activity_cerimony_details">Detalhes da Cerimonia</string>
     <string name="title_activity_execute_steps">ExecuteSteps</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
