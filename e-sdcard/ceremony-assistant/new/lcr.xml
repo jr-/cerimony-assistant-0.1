@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ceremony>
+<cerimony>
     <name>Emissão LCR #7 da AC Raiz ICPEDU v2</name>
     <short_name>Emissão LCR #7</short_name>
     <creation_date>07/04/2014</creation_date>
@@ -58,7 +58,6 @@
             <outputs>
                 <output type="text" value="" resume="Envelopes distribuídos">Cada envelope de posse da respectiva pessoa/papel a ser desempenhado</output>
             </outputs>
-            <observation></observation>
         </step>
         <step id="3" name="Dispositivos em operação" time="">
             <description>Colocar a máquina hospedeira e o HSM em operação</description>
@@ -88,7 +87,6 @@
             <outputs>
                 <output type="text" value="" resume="no">VMWare player inicializado</output>
             </outputs>
-            <observation></observation>
         </step>
         <step id="6" name="Inicializar VM AC Raiz" time="">
             <description>Inicializar VM AC Raiz ICPEDU v2</description>
@@ -98,7 +96,6 @@
             <outputs>
                 <output type="text" value="" resume="no">Máquina virtual inicializada</output>
             </outputs>
-            <observation></observation>
         </step>
         <step id="7" name="Ajustar relógio da VM" time="">
             <description>Ajustar relógio da máquina virtual</description>
@@ -108,7 +105,6 @@
             <outputs>
                 <output type="text" value="" resume="no">Máquina hospedeira com relógio atualizado em horário UTC</output>
             </outputs>
-            <observation></observation>
         </step>
         <step id="8" name="Acertar relógio do HSM operacional" time="">
             <description>Acertar relógio do HSM operacional</description>
@@ -118,7 +114,6 @@
             <outputs>
                 <output type="text" value="" resume="no">Relógio acertado</output>
             </outputs>
-            <observation></observation>
         </step>
         <step id="9" name="Liberar a chave privada" time="">
             <description>Liberar a chave privada da AC Raiz para uso</description>
@@ -128,7 +123,6 @@
             <outputs>
                 <output type="text" resume="no">Chave Chave-ac-raiz-icpedu-v2-2012 carregada. Number of Keys:100 Time to use: infinito</output>
             </outputs>
-            <observation></observation>
         </step>
         <step id="10" name="Criar pasta na máquina virtual" time="">
             <description>Criar pasta na máquina virtual</description>
@@ -138,7 +132,6 @@
             <outputs>
                 <output type="text" resume="no">Pasta criada</output>
             </outputs>
-            <observation></observation>
         </step>
         <step id="11" name="Emitir a LCR" time="">
             <description>Emitir a LCR</description>
@@ -146,89 +139,30 @@
                 <input type="text" resume="no">Abrir navegador Firefox Envelope com o usuário oper-ac-raiz > logar > LCRs > Gerar Lista de Certificados Revogados > Informe numero de dias > Informe seha do Operador > Gerar LCR</input>
                 <input type="text" resume="no">Período de Validade: 113 Senha do Operador > Gerar LCR</input>
             </inputs>
-            <outputs>
-            </outputs>
-            <observation></observation>
         </step>
         <step id="12" name="Download da LCR" time="">
             <description>Download da LCR</description>
-            <inputs>
-            </inputs>
-            <outputs>
-            </outputs>
-            <observation></observation>
         </step>
         <step id="13" name="Descarregar a chave da AC Raiz" time="">
             <description>Descarregar a chave da AC Raiz</description>
-            <inputs>
-            </inputs>
-            <outputs>
-            </outputs>
-            <observation></observation>
         </step>
         <step id="14" name="Fazer backup do HSM" time="">
             <description>Fazer backup do HSM</description>
-            <inputs>
-            </inputs>
-            <outputs>
-            </outputs>
-            <observation></observation>
         </step>
         <step id="15" name="Desligar o HSM" time="">
-          <description></description>
-          <inputs>
-          </inputs>
-          <outputs>
-          </outputs>
-          <observation></observation>
         </step>
         <step id="16" name="Fazer backup do SGCI" time="">
-          <description></description>
-          <inputs>
-          </inputs>
-          <outputs>
-          </outputs>
-          <observation></observation>
         </step>
         <step id="17" name="Copiar Pasta" time="">
             <description>Copiar Pasta dos arquivos da cerimonia em pendrive</description>
-            <inputs>
-            </inputs>
-            <outputs>
-            </outputs>
-            <observation></observation>
         </step>
         <step id="18" name="Desligar a Máquina Virtual" time="">
-          <description></description>
-          <inputs>
-          </inputs>
-          <outputs>
-          </outputs>
-          <observation></observation>
         </step>
         <step id="19" name="Desligar a Máquina Hospedeira" time="">
-          <description></description>
-          <inputs>
-          </inputs>
-          <outputs>
-          </outputs>
-          <observation></observation>
         </step>
         <step id="20" name="Guardar novamente os smartcards" time="">
-          <description></description>
-          <inputs>
-          </inputs>
-          <outputs>
-          </outputs>
-          <observation></observation>
         </step>
         <step id="21" name="Fechamento da Ata">
-          <description></description>
-          <inputs>
-          </inputs>
-          <outputs>
-          </outputs>
-          <observation></observation>
         </step>
     </steps>
-</ceremony>
+</cerimony>
