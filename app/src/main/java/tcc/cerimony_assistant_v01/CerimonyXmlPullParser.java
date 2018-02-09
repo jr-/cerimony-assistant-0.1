@@ -2,6 +2,7 @@ package tcc.cerimony_assistant_v01;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.os.Environment;
 import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -9,6 +10,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -29,8 +31,8 @@ public class CerimonyXmlPullParser {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             XmlPullParser xpp = factory.newPullParser();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(ctx.getAssets().open(filePath)));
-
+            String root_sd = Environment.getExternalStorageDirectory().toString();
+            BufferedReader reader = new BufferedReader(new FileReader(root_sd+"/ceremony-assistant/"+filePath));
             xpp.setInput(reader);
 
             int eventType = xpp.getEventType();
