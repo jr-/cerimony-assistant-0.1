@@ -13,6 +13,7 @@ import android.widget.TextView;
  * A placeholder fragment containing a simple view.
  */
 public class CerimonyDetailsFragment extends Fragment {
+    private static final String TAG = "CerimonyDetailsFragment";
 
     public CerimonyDetailsFragment() {
     }
@@ -29,6 +30,7 @@ public class CerimonyDetailsFragment extends Fragment {
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             cerimonyFileName = intent.getStringExtra(Intent.EXTRA_TEXT);
             cerimonyPath = "new/"+cerimonyFileName;
+            CCerimonies.getInstance().setSelectedCerimony(cerimonyFileName);
             Cerimony cerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyFileName);
             cerimony = CerimonyXmlPullParser.getCerimonyFromFile(getActivity(), "new/"+cerimonyFileName, cerimony);
             ((TextView) rootView.findViewById(R.id.cerimonydetails_name))

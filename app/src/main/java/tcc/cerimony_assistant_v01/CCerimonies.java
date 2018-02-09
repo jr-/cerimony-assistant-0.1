@@ -11,6 +11,7 @@ import java.util.Map;
 public class CCerimonies {
     private static CCerimonies cc = null;
     private Map<String, Cerimony> lc;
+    private String selectedCerimonyName;
 
     private CCerimonies() {}
 
@@ -20,6 +21,14 @@ public class CCerimonies {
             Cerimony c = new Cerimony();
             lc.put(cerimoniesFileName.get(i), c);
         }
+    }
+
+    public void setSelectedCerimony(String cerimonyName) {
+        selectedCerimonyName = cerimonyName;
+    }
+
+    public Cerimony getSelectedCerimony() {
+        return lc.get(selectedCerimonyName);
     }
 
     public static CCerimonies getInstance(){
