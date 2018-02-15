@@ -7,6 +7,10 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Checkable;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -21,6 +25,7 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -36,7 +41,7 @@ public class ParticipantsFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_participants, container, false);
+        final View view = inflater.inflate(R.layout.fragment_participants, container, false);
 
         //convert participants.json in a string
         File file = new File(Environment.getExternalStorageDirectory(), "ceremony-assistant/participants.json");
@@ -67,16 +72,44 @@ public class ParticipantsFragment extends android.support.v4.app.Fragment {
         }
 
         //parse participants.json string to participants object
-        ArrayList<Participant> participants = ParticipantsJSONParser.getParticipantsFromJSON(jString);
+        final ArrayList<Participant> participants = ParticipantsJSONParser.getParticipantsFromJSON(jString);
 
         //display dinamycally the participants in a tablelayout
         TableLayout table = (TableLayout)view.findViewById(R.id.tableLayout);
+        CheckBox cb;
+        Spinner spinner;
+        final ArrayList<CheckBox> cbData = new ArrayList<CheckBox>();
+        final ArrayList<Spinner> spinnerData = new ArrayList<Spinner>();
         for(int i = 0; i < participants.size(); i++) {
             TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.attrib_row_participants, null);
             ((TextView)row.findViewById(R.id.text_participant)).setText(participants.get(i).getPName());
+            cb = (CheckBox)row.findViewById(R.id.check_box_participant);
+            spinner = (Spinner)row.findViewById(R.id.spinner_participant);
+            spinnerData.add(spinner);
+            cbData.add(cb);
             table.addView(row);
         }
         table.requestLayout();
+
+        Button btn = (Button) view.findViewById(R.id.confirm_participants_button);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Participant participant;
+            List<Participant> cer_participants = new ArrayList<Participant>();
+
+            for(int i = 0; i < cbData.size(); i++) {
+                if (cbData.get(i).isChecked()) {
+                    participant = participants.get(i);
+                    String pRole = spinnerData.get(i).getSelectedItem().toString();
+                    participant.setCargo(pRole);
+                    cer_participants.add(participant);
+                }
+            }
+            CCerimonies.getInstance().getSelectedCerimony().setParticipants(cer_participants);
+            }
+        });
         return view;
     }
 

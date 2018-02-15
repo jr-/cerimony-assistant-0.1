@@ -13,4 +13,11 @@
         android:layout_alignParentTop="true"
         android:id="@+id/tableLayout">
     </TableLayout>
+    <Button
+        android:text="Confirmar Participantes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/confirm_participants_button" />
 </RelativeLayout>
