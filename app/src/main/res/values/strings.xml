@@ -7,4 +7,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="role_arrays">
+        <item>Auditor</item>
+        <item>Operador</item>
+        <item>Administrador</item>
+        <item>Navegador</item>
+    </string-array>
 </resources>
