@@ -7,6 +7,9 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,6 +38,7 @@ public class ParticipantsFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_participants, container, false);
 
+        //convert participants.json in a string
         File file = new File(Environment.getExternalStorageDirectory(), "ceremony-assistant/participants.json");
         FileInputStream stream = null;
         try {
@@ -62,8 +66,17 @@ public class ParticipantsFragment extends android.support.v4.app.Fragment {
             }
         }
 
+        //parse participants.json string to participants object
         ArrayList<Participant> participants = ParticipantsJSONParser.getParticipantsFromJSON(jString);
 
+        //display dinamycally the participants in a tablelayout
+        TableLayout table = (TableLayout)view.findViewById(R.id.tableLayout);
+        for(int i = 0; i < participants.size(); i++) {
+            TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.attrib_row_participants, null);
+            ((TextView)row.findViewById(R.id.text_participant)).setText(participants.get(i).getPName());
+            table.addView(row);
+        }
+        table.requestLayout();
         return view;
     }
 
