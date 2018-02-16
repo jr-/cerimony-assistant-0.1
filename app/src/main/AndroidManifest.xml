@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tcc.cerimony_assistant_v01">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,8 +14,8 @@
         <activity
             android:name=".ListNewCerimonies"
             android:label="@string/list_new_cerimonies_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,11 +23,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ManageParticipantsActivity"
+            android:label="@string/title_activity_manage_participants"
+            android:parentActivityName=".ManageParticipantsActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tcc.cerimony_assistant_v01.ListNewCerimonies" />
+        </activity>
+        <activity
             android:name=".CerimonyDetails"
             android:label="@string/title_activity_cerimony_details"
             android:parentActivityName=".ListNewCerimonies"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tcc.cerimony_assistant_v01.ListNewCerimonies" />
@@ -34,11 +46,12 @@
             android:name=".ExecuteSteps"
             android:label="@string/title_activity_execute_steps"
             android:parentActivityName=".CerimonyDetails"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tcc.cerimony_assistant_v01.CerimonyDetails" />
         </activity>
     </application>
+
 </manifest>
