@@ -91,7 +91,7 @@ public class ExecuteStepsFragment extends Fragment {
 
                     //dinamically modify GUI to step(1) at step(size-1)
                     stepNumber++;
-                    if(stepNumber < steps.size()-1){
+                    if(stepNumber < steps.size()){
                         curStep = steps.get(stepNumber);
 
                         getActivity().setTitle(selectedCerimony.getShortName() + " @ "+ "Passo "+stepNumber);
@@ -130,10 +130,13 @@ public class ExecuteStepsFragment extends Fragment {
                                 lo.addView(tv);
                             }
                         }
-                    } else if(stepNumber == steps.size()-1){
+                    }
+
+                    if(stepNumber == steps.size()-1){
                         nextBtn.setBackgroundColor(Color.GREEN);
                         nextBtn.setText("Finalizar");
-                    } else {
+                    }
+                    if(stepNumber == steps.size()) {
                         //end of ceremony, save, feedbackmessage in the initial activity?
                         File file;
 
