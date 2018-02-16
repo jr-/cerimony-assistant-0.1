@@ -1,6 +1,7 @@
 package tcc.cerimony_assistant_v01;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Environment;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -107,7 +109,17 @@ public class ParticipantsFragment extends android.support.v4.app.Fragment {
                     cer_participants.add(participant);
                 }
             }
-            CCerimonies.getInstance().getSelectedCerimony().setParticipants(cer_participants);
+            if(cer_participants.size() == 0) {
+                //display feedback message
+                Context context = getContext();
+                CharSequence text = "Nenhum participante foi confirmado";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            } else {
+                CCerimonies.getInstance().getSelectedCerimony().setParticipants(cer_participants);
+            }
             }
         });
         return view;
