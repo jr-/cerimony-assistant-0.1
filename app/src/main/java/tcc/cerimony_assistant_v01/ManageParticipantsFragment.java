@@ -7,11 +7,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +33,10 @@ public class ManageParticipantsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_manage_participants, container, false);
+        final View view = inflater.inflate(R.layout.fragment_manage_participants, container, false);
         String jString = ParticipantsJSONParser.convertJSONFiletoString();
         List<Participant> participants = ParticipantsJSONParser.getParticipantsFromJSON(jString);
-
+        //if participants = null tratar...
 
         TableLayout table = (TableLayout)view.findViewById(R.id.tableLayout);
 
@@ -43,6 +49,25 @@ public class ManageParticipantsFragment extends Fragment {
             table.addView(row, i+1);
         }
         table.requestLayout();
+
+        Button btn = (Button) view.findViewById(R.id.button_add_participant);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Participant nParticipant = new Participant();
+                String name = ((EditText) view.findViewById(R.id.textName)).getText().toString();
+                String email = ((EditText) view.findViewById(R.id.textEmail)).getText().toString();;
+                String unit = ((EditText) view.findViewById(R.id.textUnit)).getText().toString();;
+                nParticipant.setUnidade(unit);
+                nParticipant.setPName(name);
+                nParticipant.setEmail(email);
+
+                String json = ParticipantsJSONParser.addParticipantToJson(nParticipant);
+                ParticipantsJSONParser.writeJson(json);
+
+            }
+        });
         return view;
     }
 }

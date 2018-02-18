@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -55,6 +56,17 @@ public class ParticipantsJSONParser {
         }
         return jString;
     }
+
+    public static boolean writeJson(String json) {
+        String path = Environment.getExternalStorageDirectory() + "/ceremony-assistant/participants.json";
+        try (FileWriter file = new FileWriter(path)) {
+            file.write(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     public static ArrayList<Participant> getParticipantsFromJSON(String json) {
         if (json != null) {
             try {
@@ -85,6 +97,38 @@ public class ParticipantsJSONParser {
                     participantList.add(participant);
                 }
                 return participantList;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            Log.e("JSONNULL", "No participants added in participants.JSON");
+            return null;
+        }
+    }
+
+    public static String ParticipantsToJson(ArrayList<Participant> pList) {
+        return "";
+    }
+
+    public static String addParticipantToJson(Participant participant) {
+        String json = convertJSONFiletoString();
+
+        if (json != null) {
+            try {
+
+                ArrayList<Participant> participantList = new ArrayList<Participant>();
+                JSONObject jsonObj = new JSONObject(json);
+
+// Getting JSON Array node
+                JSONArray jParticipants = jsonObj.getJSONArray(TAG_PARTICIPANTS);
+                JSONObject jParticipant = new JSONObject();
+                jParticipant.put("sname", participant.getPName());
+                jParticipant.put("semail", participant.getEmail());
+                jParticipant.put("sorganization", participant.getUnidade());
+                jParticipants.put(jParticipant);
+
+                return jsonObj.toString();
             } catch (JSONException e) {
                 e.printStackTrace();
                 return null;
