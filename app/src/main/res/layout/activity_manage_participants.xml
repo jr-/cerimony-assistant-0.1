@@ -30,7 +30,7 @@ tools:context="tcc.cerimony_assistant_v01.ManageParticipantsActivity">
             android:baselineAligned="false">
 
             <include
-                layout="@layout/fragment_manage_participants" />
+                layout="@layout/content_manage_participants" />
 
         </LinearLayout>
 
