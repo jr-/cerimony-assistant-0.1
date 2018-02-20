@@ -28,7 +28,13 @@ public class ParticipantsJSONParser {
     private static final String TAG_SORGANIZATION = "sorganization";
     public static String convertJSONFiletoString() {
         //convert participants.json in a string
+        //se o arquivo não existe, cria o arquivo
         File file = new File(Environment.getExternalStorageDirectory(), "ceremony-assistant/participants.json");
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         FileInputStream stream = null;
         try {
             stream = new FileInputStream(file);
@@ -57,6 +63,20 @@ public class ParticipantsJSONParser {
         return jString;
     }
 
+    public static String instantiateJson() {
+        JSONObject jsonObj = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        try {
+            jsonObj.put("participants", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String jParticipants = jsonObj.toString();
+        writeJson(jParticipants);
+
+        return jParticipants;
+    }
+
     public static boolean writeJson(String json) {
         String path = Environment.getExternalStorageDirectory() + "/ceremony-assistant/participants.json";
         try (FileWriter file = new FileWriter(path)) {
@@ -65,6 +85,7 @@ public class ParticipantsJSONParser {
             e.printStackTrace();
             return false;
         }
+
         return true;
     }
     public static ArrayList<Participant> getParticipantsFromJSON(String json) {

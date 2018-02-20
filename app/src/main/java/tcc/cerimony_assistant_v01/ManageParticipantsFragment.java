@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,8 +36,11 @@ public class ManageParticipantsFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_manage_participants, container, false);
         String jString = ParticipantsJSONParser.convertJSONFiletoString();
-        List<Participant> participants = ParticipantsJSONParser.getParticipantsFromJSON(jString);
-        //if participants = null tratar...
+        if ("".equals(jString)){
+            //cria a o jsonArray participants, faz com que getParticipants nunca seja null
+            jString = ParticipantsJSONParser.instantiateJson();
+        }
+        final List<Participant> participants = ParticipantsJSONParser.getParticipantsFromJSON(jString);
 
         TableLayout table = (TableLayout)view.findViewById(R.id.tableLayout);
 
@@ -55,17 +59,45 @@ public class ManageParticipantsFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean validate = true;
                 Participant nParticipant = new Participant();
                 String name = ((EditText) view.findViewById(R.id.textName)).getText().toString();
                 String email = ((EditText) view.findViewById(R.id.textEmail)).getText().toString();;
                 String unit = ((EditText) view.findViewById(R.id.textUnit)).getText().toString();;
-                nParticipant.setUnidade(unit);
-                nParticipant.setPName(name);
-                nParticipant.setEmail(email);
+                //if name || email || unit == "" não permitir adicionar, mostrar toast com o campo que não possou da validação
+                if ("".equals(name) || "".equals(email) || "".equals(unit)) {
+                    validate = false;
+                }
 
-                String json = ParticipantsJSONParser.addParticipantToJson(nParticipant);
-                ParticipantsJSONParser.writeJson(json);
+                if (validate) {
+                    //add participant on json
+                    nParticipant.setUnidade(unit);
+                    nParticipant.setPName(name);
+                    nParticipant.setEmail(email);
+                    String json = ParticipantsJSONParser.addParticipantToJson(nParticipant);
+                    ParticipantsJSONParser.writeJson(json);
 
+                    //clean the edit texts
+                    ((EditText) view.findViewById(R.id.textName)).setText("");
+                    ((EditText) view.findViewById(R.id.textEmail)).setText("");
+                    ((EditText) view.findViewById(R.id.textUnit)).setText("");
+
+                    TableLayout table = (TableLayout)view.findViewById(R.id.tableLayout);
+
+                    TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.attrib_row_manage_participants, null);
+                    ((TextView)row.findViewById(R.id.text_name)).setText(nParticipant.getPName());
+                    ((TextView)row.findViewById(R.id.text_email)).setText(nParticipant.getEmail());
+                    ((TextView)row.findViewById(R.id.text_unit)).setText(nParticipant.getUnidade());
+
+                    table.addView(row, table.getChildCount()-1);
+                    table.requestLayout();
+                } else {
+                    Context context = getContext();
+                    int duration = Toast.LENGTH_SHORT;
+                    CharSequence text = "Nenhum campo pode estar vazio";
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
         return view;
