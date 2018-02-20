@@ -1,6 +1,8 @@
 package tcc.cerimony_assistant_v01;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -49,18 +51,32 @@ public class ManageParticipantsFragment extends Fragment {
             ((TextView)row.findViewById(R.id.text_name)).setText(participants.get(i).getPName());
             ((TextView)row.findViewById(R.id.text_email)).setText(participants.get(i).getEmail());
             ((TextView)row.findViewById(R.id.text_unit)).setText(participants.get(i).getUnidade());
-            Button remove_btn = ((Button)row.findViewById(R.id.button_remove_participant));
+            final Button remove_btn = ((Button)row.findViewById(R.id.button_remove_participant));
             int id = participants.get(i).getId();
             row.setId(id);
 
             remove_btn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    View row = (View) v.getParent();
-                    int rId = row.getId();
-                    ParticipantsJSONParser.removeJSONParticipantById(rId);
-                    ViewGroup container = ((ViewGroup)row.getParent());
-                    container.removeView(row);
-                    container.invalidate();
+                    final View row = (View) v.getParent();
+                    TableRow tr = (TableRow) row;
+                    TextView tv = (TextView) tr.getChildAt(0);
+                    final String name = tv.getText().toString();
+
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Deletar Participante")
+                            .setMessage("Você deseja deletar o participante com o nome \""+name+"\"?")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    int rId = row.getId();
+                                    ParticipantsJSONParser.removeJSONParticipantById(rId);
+                                    ViewGroup container = ((ViewGroup)row.getParent());
+                                    container.removeView(row);
+                                    container.invalidate();
+                                    Toast.makeText(getActivity(), "Participante \""+name+"\" deletado com sucesso!", Toast.LENGTH_SHORT).show();
+                                }})
+                            .setNegativeButton(android.R.string.no, null).show();
                 }
             });
 
@@ -107,13 +123,26 @@ public class ManageParticipantsFragment extends Fragment {
 
                     remove_btn.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            View row = (View) v.getParent();
-                            int rId = row.getId();
-                            ParticipantsJSONParser.removeJSONParticipantById(rId);
+                            final View row = (View) v.getParent();
+                            TableRow tr = (TableRow) row;
+                            TextView tv = (TextView) tr.getChildAt(0);
+                            final String name = tv.getText().toString();
 
-                            ViewGroup container = ((ViewGroup)row.getParent());
-                            container.removeView(row);
-                            container.invalidate();
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle("Deletar Participante")
+                                    .setMessage("Você deseja deletar o participante com o nome \""+name+"\"?")
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            int rId = row.getId();
+                                            ParticipantsJSONParser.removeJSONParticipantById(rId);
+                                            ViewGroup container = ((ViewGroup)row.getParent());
+                                            container.removeView(row);
+                                            container.invalidate();
+                                            Toast.makeText(getActivity(), "Participante \""+name+"\" deletado com sucesso!", Toast.LENGTH_SHORT).show();
+                                        }})
+                                    .setNegativeButton(android.R.string.no, null).show();
                         }
                     });
 

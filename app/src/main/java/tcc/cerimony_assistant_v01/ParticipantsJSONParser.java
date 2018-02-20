@@ -177,7 +177,7 @@ public class ParticipantsJSONParser {
                 JSONObject jsonObj = new JSONObject(json);
                 JSONArray jParticipants = jsonObj.getJSONArray(TAG_PARTICIPANTS);
                 jParticipants.remove(id);
-                
+
 //                int len = jParticipants.length();
 //                if (jParticipants != null) {
 //                    for (int i=0;i<len;i++)
