@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 public class ParticipantsJSONParser {
     private static final String TAG_PARTICIPANTS = "participants";
+    private static final String TAG_ID = "id";
     private static final String TAG_SNAME = "sname";
     private static final String TAG_SEMAIL = "semail";
     private static final String TAG_SORGANIZATION = "sorganization";
@@ -101,7 +102,7 @@ public class ParticipantsJSONParser {
 // looping through All Participants
                 for (int i = 0; i < participants.length(); i++) {
                     JSONObject c = participants.getJSONObject(i);
-
+                    int id = c.getInt(TAG_ID);
                     String sname = c.getString(TAG_SNAME);
                     String email = c.getString(TAG_SEMAIL);
                     String sorganization = c.getString(TAG_SORGANIZATION);
@@ -109,6 +110,7 @@ public class ParticipantsJSONParser {
 
 // tmp hashmap for single student
                     Participant participant = new Participant();
+                    participant.setId(id);
                     participant.setUnidade(sorganization);
                     participant.setPName(sname);
                     participant.setEmail(email);
@@ -132,7 +134,7 @@ public class ParticipantsJSONParser {
         return "";
     }
 
-    public static String addParticipantToJson(Participant participant) {
+    public static int addParticipantToJson(Participant participant) {
         String json = convertJSONFiletoString();
 
         if (json != null) {
@@ -143,21 +145,64 @@ public class ParticipantsJSONParser {
 
 // Getting JSON Array node
                 JSONArray jParticipants = jsonObj.getJSONArray(TAG_PARTICIPANTS);
+                int id = 0;
+                //get last id
+                if(jParticipants.length() > 0) {
+                    JSONObject c = jParticipants.getJSONObject(jParticipants.length()-1);
+                    id = c.getInt(TAG_ID) + 1;
+                }
+
                 JSONObject jParticipant = new JSONObject();
+                jParticipant.put("id", id);
                 jParticipant.put("sname", participant.getPName());
                 jParticipant.put("semail", participant.getEmail());
                 jParticipant.put("sorganization", participant.getUnidade());
                 jParticipants.put(jParticipant);
-
-                return jsonObj.toString();
+                writeJson(jsonObj.toString());
+                return id;
             } catch (JSONException e) {
                 e.printStackTrace();
-                return null;
+                return -1;
             }
         } else {
             Log.e("JSONNULL", "No participants added in participants.JSON");
-            return null;
+            return -1;
         }
+    }
+
+    public static boolean removeJSONParticipantById(int id) {
+        try{
+            String json = convertJSONFiletoString();
+            if(!"".equals(json)) {
+                JSONObject jsonObj = new JSONObject(json);
+                JSONArray jParticipants = jsonObj.getJSONArray(TAG_PARTICIPANTS);
+                jParticipants.remove(id);
+                
+//                int len = jParticipants.length();
+//                if (jParticipants != null) {
+//                    for (int i=0;i<len;i++)
+//                    {
+//                        //Excluding the item at position
+//                        JSONObject c = jParticipants.getJSONObject(i);
+//                        int c_id = c.getInt(TAG_ID);
+//                        if (c_id != id)
+//                        {
+//                            list.put(jParticipants.get(i));
+//                        }
+//                    }
+//                }
+                JSONObject jsonFinal = new JSONObject();
+                jsonFinal.put("participants", jParticipants);
+
+                writeJson(jsonFinal.toString());
+            } else {
+                return false;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }
 

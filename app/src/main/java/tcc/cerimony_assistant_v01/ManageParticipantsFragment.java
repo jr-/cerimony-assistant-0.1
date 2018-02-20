@@ -25,7 +25,6 @@ import java.util.List;
 
 public class ManageParticipantsFragment extends Fragment {
 
-
     public ManageParticipantsFragment() {
         // Required empty public constructor
     }
@@ -40,7 +39,8 @@ public class ManageParticipantsFragment extends Fragment {
             //cria a o jsonArray participants, faz com que getParticipants nunca seja null
             jString = ParticipantsJSONParser.instantiateJson();
         }
-        final List<Participant> participants = ParticipantsJSONParser.getParticipantsFromJSON(jString);
+        final String json = jString;
+        final List<Participant> participants = ParticipantsJSONParser.getParticipantsFromJSON(json);
 
         TableLayout table = (TableLayout)view.findViewById(R.id.tableLayout);
 
@@ -49,6 +49,20 @@ public class ManageParticipantsFragment extends Fragment {
             ((TextView)row.findViewById(R.id.text_name)).setText(participants.get(i).getPName());
             ((TextView)row.findViewById(R.id.text_email)).setText(participants.get(i).getEmail());
             ((TextView)row.findViewById(R.id.text_unit)).setText(participants.get(i).getUnidade());
+            Button remove_btn = ((Button)row.findViewById(R.id.button_remove_participant));
+            int id = participants.get(i).getId();
+            row.setId(id);
+
+            remove_btn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    View row = (View) v.getParent();
+                    int rId = row.getId();
+                    ParticipantsJSONParser.removeJSONParticipantById(rId);
+                    ViewGroup container = ((ViewGroup)row.getParent());
+                    container.removeView(row);
+                    container.invalidate();
+                }
+            });
 
             table.addView(row, i+1);
         }
@@ -74,8 +88,8 @@ public class ManageParticipantsFragment extends Fragment {
                     nParticipant.setUnidade(unit);
                     nParticipant.setPName(name);
                     nParticipant.setEmail(email);
-                    String json = ParticipantsJSONParser.addParticipantToJson(nParticipant);
-                    ParticipantsJSONParser.writeJson(json);
+                    int pId = ParticipantsJSONParser.addParticipantToJson(nParticipant);
+                    nParticipant.setId(pId);
 
                     //clean the edit texts
                     ((EditText) view.findViewById(R.id.textName)).setText("");
@@ -88,6 +102,21 @@ public class ManageParticipantsFragment extends Fragment {
                     ((TextView)row.findViewById(R.id.text_name)).setText(nParticipant.getPName());
                     ((TextView)row.findViewById(R.id.text_email)).setText(nParticipant.getEmail());
                     ((TextView)row.findViewById(R.id.text_unit)).setText(nParticipant.getUnidade());
+                    Button remove_btn = ((Button)row.findViewById(R.id.button_remove_participant));
+                    row.setId(pId);
+
+                    remove_btn.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            View row = (View) v.getParent();
+                            int rId = row.getId();
+                            ParticipantsJSONParser.removeJSONParticipantById(rId);
+
+                            ViewGroup container = ((ViewGroup)row.getParent());
+                            container.removeView(row);
+                            container.invalidate();
+                        }
+                    });
+
 
                     table.addView(row, table.getChildCount()-1);
                     table.requestLayout();
