@@ -103,68 +103,6 @@ public class CerimonyXmlPullParser {
                     curStep.setSName(stepName);
 
                     while (!("step".equalsIgnoreCase(tagname) && eventType == XmlPullParser.END_TAG)) {
-                        if ("inputs".equalsIgnoreCase(tagname) && eventType == XmlPullParser.START_TAG) {
-                            List<Input> inputs = new ArrayList<Input>();
-                            eventType = xpp.next();
-                            tagname = xpp.getName();
-                            while (!("inputs".equalsIgnoreCase(tagname) && eventType == XmlPullParser.END_TAG)) {
-                                if("input".equalsIgnoreCase(tagname) && eventType == XmlPullParser.START_TAG){
-                                    Input input = new Input();
-                                    while(!("input".equalsIgnoreCase(tagname) && eventType == XmlPullParser.END_TAG)) {
-                                        switch (eventType) {
-                                            case XmlPullParser.START_TAG:
-                                                input.setType(xpp.getAttributeValue(null, "type"));
-                                                input.setResume(xpp.getAttributeValue(null, "resume"));
-                                                break;
-                                            case XmlPullParser.TEXT:
-                                                curText = xpp.getText();
-                                                break;
-                                            case XmlPullParser.END_TAG:
-                                                break;
-                                            default:
-                                                break;
-
-                                        }
-                                        eventType = xpp.next();
-                                        tagname = xpp.getName();
-                                    }
-                                    input.setText(curText);
-                                    inputs.add(input);
-                                    eventType = xpp.next();
-                                    tagname = xpp.getName();
-                                }
-                                eventType = xpp.next();
-                                tagname = xpp.getName();
-                            }
-                            curStep.setInputs(inputs);
-                        }
-
-                        if ("outputs".equalsIgnoreCase(tagname) && eventType == XmlPullParser.START_TAG) {
-                            List<String> outputs = new ArrayList<String>();
-                            eventType = xpp.next();
-                            tagname = xpp.getName();
-                            while (!("outputs".equalsIgnoreCase(tagname) && eventType == XmlPullParser.END_TAG)) {
-                                switch (eventType) {
-                                    case XmlPullParser.START_TAG:
-                                        break;
-                                    case XmlPullParser.TEXT:
-                                        curText = xpp.getText();
-                                        break;
-                                    case XmlPullParser.END_TAG:
-                                        if (tagname.equalsIgnoreCase("output")) {
-                                            outputs.add(curText);
-                                        }
-                                        break;
-                                    default:
-                                        break;
-
-                                }
-                                eventType = xpp.next();
-                                tagname = xpp.getName();
-
-                            }
-                            curStep.setOutput(outputs);
-                        }
 
                         switch (eventType) {
                             case XmlPullParser.START_TAG:
@@ -173,7 +111,11 @@ public class CerimonyXmlPullParser {
                                 curText = xpp.getText();
                                 break;
                             case XmlPullParser.END_TAG:
-                                if (tagname.equalsIgnoreCase("description")) {
+                                if (tagname.equalsIgnoreCase("input")) {
+                                    curStep.setInput(curText);
+                                } else if (tagname.equalsIgnoreCase("output")) {
+                                    curStep.setOutput(curText);
+                                } else if (tagname.equalsIgnoreCase("description")) {
                                     curStep.setDescription(curText);
                                 } else if (tagname.equalsIgnoreCase("observation")) {
                                     curStep.setObservation(curText);

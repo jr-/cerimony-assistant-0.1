@@ -15,6 +15,8 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -50,22 +52,21 @@ public class ExecuteStepsFragment extends Fragment {
             Date curDateTime = new Date(msTime);
 
 
-
             final Cerimony selectedCerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyName);
 
             //set date to start_ceremony_date and hour
             Calendar cal = Calendar.getInstance();
             cal.setTime(curDateTime);
             String curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
-            String curDate = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.YEAR);
-            String rgDate = cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.DAY_OF_MONTH);
+            String curDate = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR);
+            String rgDate = cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH);
 
             selectedCerimony.setInitialDate(curDate);
             selectedCerimony.setInitialTime(curTime);
 
             //create folder for started ceremony
             final String folderName = rgDate + " - " + curTime + " - " + selectedCerimony.getShortName();
-            File folder = new File(Environment.getExternalStorageDirectory(), "ceremony-assistant/final/" +folderName);
+            File folder = new File(Environment.getExternalStorageDirectory(), "ceremony-assistant/final/" + folderName);
             folder.mkdirs();
 
             //get steps and curStep = steps(0)
@@ -73,14 +74,21 @@ public class ExecuteStepsFragment extends Fragment {
             curStep = steps.get(stepNumber);
 
             //dinamically modify GUI to step(0)
-            getActivity().setTitle(selectedCerimony.getShortName() + " @ "+ "Passo "+stepNumber);
-            final TextView mTextView = ((TextView) rootView.findViewById(R.id.description_text));
-            mTextView.setText(curStep.getDescription());
+            getActivity().setTitle(selectedCerimony.getShortName() + " @ " + "Passo " + stepNumber);
+            final TextView description_tv = ((TextView) rootView.findViewById(R.id.description_text));
+            description_tv.setText(curStep.getDescription());
 
-            List<Input> inputs = curStep.getInputs();
+            final TextView input_tv = ((TextView) rootView.findViewById(R.id.text_input));
+            input_tv.setText("\u2022 " + curStep.getInput());
+
+            final TextView output_tv = ((TextView) rootView.findViewById(R.id.text_output));
+            output_tv.setText("\u2022 " + curStep.getOutput());
+
+            final TextView observation_tv = ((TextView) rootView.findViewById(R.id.text_observation));
+            observation_tv.setText("\u2022 " + curStep.getObservation());
 
             final Button nextBtn = (Button) rootView.findViewById(R.id.next_step_button);
-            Log.v("stepsize", ""+steps.size());
+            Log.v("stepsize", "" + steps.size());
             nextBtn.setOnClickListener(new View.OnClickListener() {
                 //            @Override
                 public void onClick(View v) {
@@ -94,97 +102,66 @@ public class ExecuteStepsFragment extends Fragment {
 
                     //dinamically modify GUI to step(1) at step(size-1)
                     stepNumber++;
-                    if(stepNumber < steps.size()){
+                    if (stepNumber < steps.size()) {
                         curStep = steps.get(stepNumber);
 
-                        getActivity().setTitle(selectedCerimony.getShortName() + " @ "+ "Passo "+stepNumber);
-                        LinearLayout li = ((LinearLayout) rootView.findViewById(R.id.linear_entradas));
-                        //deleting previous step view elements
-                        if(li.getChildCount() > 0)
-                            li.removeAllViews();
+                        getActivity().setTitle(selectedCerimony.getShortName() + " @ " + "Passo " + stepNumber);
 
-                        LinearLayout lo = ((LinearLayout) rootView.findViewById(R.id.linear_saidas));
-                        //deleting previous step view elements
-                        if(lo.getChildCount() > 0)
-                            lo.removeAllViews();
+                        description_tv.setText(curStep.getDescription());
+                        input_tv.setText("\u2022 " + curStep.getInput());
+                        output_tv.setText("\u2022 " + curStep.getOutput());
+                        observation_tv.setText("\u2022 " + curStep.getObservation());
 
-                        TextView mTextView = ((TextView) rootView.findViewById(R.id.description_text));
-                        mTextView.setText(curStep.getDescription());
+                        if (stepNumber == steps.size() - 1) {
+                            nextBtn.setBackgroundColor(Color.GREEN);
+                            nextBtn.setText("Finalizar");
+                        }
+                        if (stepNumber == steps.size()) {
+                            //end of ceremony, save, feedbackmessage in the initial activity?
+                            File file;
+                            File file2;
 
-                        List<Input> inputs = curStep.getInputs();
-                        Log.v("inputs", ""+inputs.size());
+                            cal = Calendar.getInstance();
+                            cal.setTime(curDateTime);
+                            curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+                            String curDate = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR);
 
-                        if(inputs.size() > 0){
-                            for (int i=0; i < inputs.size(); i++) {
-                                if("text".equalsIgnoreCase(inputs.get(i).getType())){
-                                    TextView tv = new TextView(getActivity());
-                                    tv.setId(i);
-                                    tv.setText("\u2022 "+inputs.get(i).getText());
-                                    li.addView(tv);
+                            selectedCerimony.setFinalDate(curDate);
+                            selectedCerimony.setFinalTime(curTime);
+
+                            if (isExternalStorageWritable()) {
+                                String root_sd = Environment.getExternalStorageDirectory().toString();
+                                File dir = new File(root_sd + "/ceremony-assistant/final/" + folderName);
+                                dir.mkdirs();
+                                try {
+                                    file = new File(dir, selectedCerimony.getShortName().replaceAll("\\s", "") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".xml");
+                                    file.createNewFile();
+                                    FileOutputStream f = new FileOutputStream(file);
+                                    String xmlData = selectedCerimony.toXML();
+                                    f.write(xmlData.getBytes());
+                                    f.close();
+
+                                    file2 = new File(dir, selectedCerimony.getShortName().replaceAll("\\s", "") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".txt");
+                                    file2.createNewFile();
+                                    FileOutputStream f2 = new FileOutputStream(file);
+                                    String txtData = selectedCerimony.toTXT();
+                                    f2.write(txtData.getBytes());
+                                    f2.close();
+
+                                    //send the information about the new file and folders to scanner
+                                    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                                    intent.setData(Uri.fromFile(file));
+                                    getActivity().sendBroadcast(intent);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
                             }
+
                         }
-                        List<String> outputs = curStep.getOutput();
-                        if(outputs.size() > 0){
-                            for (int i=0; i < outputs.size(); i++) {
-                                TextView tv = new TextView(getActivity());
-                                tv.setId(inputs.size()+i);
-                                tv.setText("\u2022 "+outputs.get(i));
-                                lo.addView(tv);
-                            }
-                        }
-                    }
-
-                    if(stepNumber == steps.size()-1){
-                        nextBtn.setBackgroundColor(Color.GREEN);
-                        nextBtn.setText("Finalizar");
-                    }
-                    if(stepNumber == steps.size()) {
-                        //end of ceremony, save, feedbackmessage in the initial activity?
-                        File file;
-                        File file2;
-
-                        cal = Calendar.getInstance();
-                        cal.setTime(curDateTime);
-                        curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
-                        String curDate = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.YEAR);
-
-                        selectedCerimony.setFinalDate(curDate);
-                        selectedCerimony.setFinalTime(curTime);
-
-                        if(isExternalStorageWritable()) {
-                            String root_sd = Environment.getExternalStorageDirectory().toString();
-                            File dir = new File(root_sd + "/ceremony-assistant/final/" + folderName);
-                            dir.mkdirs();
-                            try {
-                                file = new File(dir, selectedCerimony.getShortName().replaceAll("\\s","") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".xml");
-                                file.createNewFile();
-                                FileOutputStream f = new FileOutputStream(file);
-                                String xmlData = selectedCerimony.toXML();
-                                f.write(xmlData.getBytes());
-                                f.close();
-
-                                file2 = new File(dir, selectedCerimony.getShortName().replaceAll("\\s","") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".txt");
-                                file2.createNewFile();
-                                FileOutputStream f2 = new FileOutputStream(file);
-                                String txtData = selectedCerimony.toTXT();
-                                f2.write(txtData.getBytes());
-                                f2.close();
-
-                                //send the information about the new file and folders to scanner
-                                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                                intent.setData(Uri.fromFile(file));
-                                getActivity().sendBroadcast(intent);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
                     }
                 }
             });
         }
-
         return rootView;
     }
 

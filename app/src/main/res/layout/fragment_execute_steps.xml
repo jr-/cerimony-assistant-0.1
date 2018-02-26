@@ -54,14 +54,14 @@
             android:text="Entrada"
             android:textStyle="bold"/>
 
-        <LinearLayout
-            android:id="@+id/linear_entradas"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/textView2">
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/text_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView2"
+            />
 
         <TextView
             android:text="Saída"
@@ -71,16 +71,36 @@
             android:id="@+id/textView3"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/linear_entradas"
+            android:layout_below="@+id/text_input"
             />
 
-        <LinearLayout
-            android:id="@+id/linear_saidas"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/text_output"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView3" />
 
-        </LinearLayout>
+        <TextView
+            android:text="Observações"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/text_output"
+            />
+
+        <TextView
+            android:id="@+id/text_observation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView3"
+            />
 
     </LinearLayout>
 

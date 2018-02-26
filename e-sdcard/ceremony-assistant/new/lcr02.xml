@@ -18,15 +18,15 @@
     <steps>
         <step id="2" name="Entrega dos envelopes" time="">
             <description>Entrega dos envelopes aos membros dos grupos</description>
-            <input type="text" value="" resume="Envelopes lacrados">Envelopes lacrados com smartcards, PINs e backup de PINs</input>
-            <output type="text" value="" resume="Envelopes distribuídos">Cada envelope de posse da respectiva pessoa/papel a ser desempenhado</output>
-            <observation></observation>
+            <input>Envelopes lacrados com smartcards, PINs e backup de PINs</input>
+            <output>Cada envelope de posse da respectiva pessoa/papel a ser desempenhado</output>
+            <observation>Teste</observation>
             <photo></photo>
         </step>
         <step id="3" name="Dispositivos em operação" time="">
             <description>Colocar a máquina hospedeira e o HSM em operação</description>
-            <input type="text" value="" resume="no">Máquina hospedeira pré-configurada. Máquina hospedeira e HSMs não bootados. Envelopes com usuário e senha de acesso ao SO. Envelopes com smartcards e PINs já distribuidos. Datashow, pen drive.</input>
-            <output type="text" value="" resume="no">Máquina hospedeira e HSMs bootados.</output>
+            <input>Máquina hospedeira pré-configurada. Máquina hospedeira e HSMs não bootados. Envelopes com usuário e senha de acesso ao SO. Envelopes com smartcards e PINs já distribuidos. Datashow, pen drive.</input>
+            <output>Máquina hospedeira e HSMs bootados.</output>
             <observation>Os equipamentos com a AC Raiz e o HSM devem ser ligados e disponibilizados aos operadores. Login na máquina hospedeira com usuário e senha criado na cerimônia da AC Raiz.</observation>
         </step>
         <step id="4" name="Relógio da máquina hospedeira" time="">

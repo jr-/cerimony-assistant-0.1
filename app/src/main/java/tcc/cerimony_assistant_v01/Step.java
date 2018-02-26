@@ -14,6 +14,9 @@ public class Step {
     private String inputType;
     private String outputType;
     private String observation;
+    private String time;
+    private String input;
+    private String output;
 
     public String getTime() {
         return time;
@@ -22,11 +25,6 @@ public class Step {
     public void setTime(String time) {
         this.time = time;
     }
-
-    private String time;
-    private List<Input> inputs = new ArrayList<Input>();
-    private List<String> output = new ArrayList<String>(); //TODO necessario add os atributos dos outputs e inputs
-
 
     public String getId() {
         return id;
@@ -76,19 +74,19 @@ public class Step {
         this.observation = observation;
     }
 
-    public List<Input> getInputs() {
-        return inputs;
+    public String getInput() {
+        return input;
     }
 
-    public void setInputs(List<Input> inputs) {
-        this.inputs = inputs;
+    public void setInput(String input) {
+        this.input = input;
     }
 
-    public List<String> getOutput() {
+    public String getOutput() {
         return output;
     }
 
-    public void setOutput(List<String> output) {
+    public void setOutput(String output) {
         this.output = output;
     }
 }
