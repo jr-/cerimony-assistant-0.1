@@ -35,6 +35,7 @@ public class CerimonyDetails extends AppCompatActivity {
         CeremonyDetailsPageAdapter adapter = new CeremonyDetailsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new CerimonyDetailsFragment(), "Detalhes");
         adapter.addFragment(new ParticipantsFragment(), "Participantes");
+        adapter.addFragment(new RequirementsFragment(), "Requisitos");
         viewPager.setAdapter(adapter);
     }
 

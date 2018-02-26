@@ -43,15 +43,12 @@ public class ExecuteStepsFragment extends Fragment {
 //        // The detail Activity called via intent.  Inspect the intent for forecast data.
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra("LOAD_PATH")) {
-            final String cerimonyNewPath = intent.getStringExtra("NEW_PATH");
-            final String cerimonyLoadPath = intent.getStringExtra("LOAD_PATH");
             final String cerimonyName = intent.getStringExtra("NAME");
 
             //getting timestamp to start_ceremony_date and hour
             long msTime = System.currentTimeMillis();
             Date curDateTime = new Date(msTime);
 
-            //make a copy of the selected ceremony file xml in assets/new to sdcard
 
 
             final Cerimony selectedCerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyName);
@@ -61,9 +58,15 @@ public class ExecuteStepsFragment extends Fragment {
             cal.setTime(curDateTime);
             String curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
             String curDate = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.YEAR);
+            String rgDate = cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH)+1) + "/" + cal.get(Calendar.DAY_OF_MONTH);
 
             selectedCerimony.setInitialDate(curDate);
             selectedCerimony.setInitialTime(curTime);
+
+            //create folder for started ceremony
+            final String folderName = rgDate + " - " + curTime + " - " + selectedCerimony.getShortName();
+            File folder = new File(Environment.getExternalStorageDirectory(), "ceremony-assistant/final/" +folderName);
+            folder.mkdirs();
 
             //get steps and curStep = steps(0)
             final List<Step> steps = selectedCerimony.getSteps();
@@ -139,6 +142,7 @@ public class ExecuteStepsFragment extends Fragment {
                     if(stepNumber == steps.size()) {
                         //end of ceremony, save, feedbackmessage in the initial activity?
                         File file;
+                        File file2;
 
                         cal = Calendar.getInstance();
                         cal.setTime(curDateTime);
@@ -150,7 +154,7 @@ public class ExecuteStepsFragment extends Fragment {
 
                         if(isExternalStorageWritable()) {
                             String root_sd = Environment.getExternalStorageDirectory().toString();
-                            File dir = new File(root_sd + "/ceremony-assistant/load/");
+                            File dir = new File(root_sd + "/ceremony-assistant/final/" + folderName);
                             dir.mkdirs();
                             try {
                                 file = new File(dir, selectedCerimony.getShortName().replaceAll("\\s","") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".xml");
@@ -159,6 +163,14 @@ public class ExecuteStepsFragment extends Fragment {
                                 String xmlData = selectedCerimony.toXML();
                                 f.write(xmlData.getBytes());
                                 f.close();
+
+                                file2 = new File(dir, selectedCerimony.getShortName().replaceAll("\\s","") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".txt");
+                                file2.createNewFile();
+                                FileOutputStream f2 = new FileOutputStream(file);
+                                String txtData = selectedCerimony.toTXT();
+                                f2.write(txtData.getBytes());
+                                f2.close();
+
                                 //send the information about the new file and folders to scanner
                                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                                 intent.setData(Uri.fromFile(file));

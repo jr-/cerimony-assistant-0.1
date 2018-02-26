@@ -49,10 +49,11 @@ public class CerimonyDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 List<Participant> participantList = CCerimonies.getInstance().getSelectedCerimony().getParticipants();
-                if(participantList.size() == 0) {
+                boolean isConfirmRequirements = CCerimonies.getInstance().getSelectedCerimony().isConfirmRequirements();
+                if(participantList.size() == 0 || !isConfirmRequirements) {
                     //display feedback message
                     Context context = getContext();
-                    CharSequence text = "É necessário confirmar pelo menos 1 participante para iniciar a cerimônia";
+                    CharSequence text = "É necessário confirmar todos os requisitos e confirmar pelo menos 1 participante para iniciar a cerimônia";
                     int duration = Toast.LENGTH_SHORT;
 
                     Toast toast = Toast.makeText(context, text, duration);

@@ -14,6 +14,18 @@ public class Cerimony {
     private String initialDate;
     private String finalDate;
     private String initialTime;
+    private String finalTime;
+    private String local;
+    private boolean confirmRequirements = false;
+    private List<Participant> participants = new ArrayList<Participant>();
+    private List<Step> steps = new ArrayList<Step>();
+    private List<String> requirements = new ArrayList<String>();
+
+    public Cerimony() {}
+
+    public boolean isConfirmRequirements() {return confirmRequirements;}
+
+    public void setConfirmRequirements(boolean confirmRequirements) {this.confirmRequirements = confirmRequirements;}
 
     public String getShortName() {
         return shortName;
@@ -22,8 +34,6 @@ public class Cerimony {
     public void setShortName(String shortName) {
         this.shortName = shortName;
     }
-
-    private String finalTime;
 
     public String getInitialTime() {
         return initialTime;
@@ -40,12 +50,6 @@ public class Cerimony {
     public void setFinalTime(String finalTime) {
         this.finalTime = finalTime;
     }
-
-    private String local;
-    private List<Participant> participants = new ArrayList<Participant>();
-    private List<Step> steps = new ArrayList<Step>();
-
-    public Cerimony() {}
 
     public String getCName() {
         return name;
@@ -103,6 +107,10 @@ public class Cerimony {
         this.steps = steps;
     }
 
+    public List<String> getRequirements() { return requirements; }
+
+    public void setRequirements(List<String> requirements) { this.requirements = requirements; }
+
     public String toXML() {
 
         String cerimony = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -146,5 +154,9 @@ public class Cerimony {
         cerimony += "\t</steps>\n"
                   + "</cerimony>\n";
         return cerimony;
+    }
+
+    public String toTXT() {
+        return "";
     }
 }

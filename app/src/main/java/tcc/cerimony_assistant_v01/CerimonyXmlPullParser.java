@@ -38,7 +38,7 @@ public class CerimonyXmlPullParser {
             int eventType = xpp.getEventType();
             String tagname = xpp.getName();
 
-            while ( !"steps".equalsIgnoreCase(tagname) && eventType != XmlPullParser.END_DOCUMENT) {
+            while ( !"requirements".equalsIgnoreCase(tagname) && eventType != XmlPullParser.END_DOCUMENT) {
 
                 //TODO refactoring mais elegante fazer loop até END_TAG
                 switch (eventType) {
@@ -70,6 +70,29 @@ public class CerimonyXmlPullParser {
                 eventType = xpp.next();
                 tagname = xpp.getName();
             }
+
+            List<String> requirements = new ArrayList<String>();
+            while ( !"steps".equalsIgnoreCase(tagname) && eventType != XmlPullParser.END_DOCUMENT) {
+
+                switch (eventType) {
+                    case XmlPullParser.START_TAG:
+                        break;
+                    case XmlPullParser.TEXT:
+                        curText = xpp.getText();
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if (tagname.equalsIgnoreCase("item"))
+                            requirements.add(curText);
+                            break;
+                    default:
+                        break;
+                }
+                eventType = xpp.next();
+                tagname = xpp.getName();
+            }
+            cerimony.setRequirements(requirements);
+            eventType = xpp.next();
+            tagname = xpp.getName();
 
             List<Step> steps = new ArrayList<Step>();
             while(!("steps".equalsIgnoreCase(tagname) && eventType == XmlPullParser.END_TAG)) {
