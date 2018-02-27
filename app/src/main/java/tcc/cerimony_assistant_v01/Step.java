@@ -13,7 +13,7 @@ public class Step {
     private String description;
     private String inputType;
     private String outputType;
-    private String observation;
+    private String observation = "";
     private String time;
     private String input;
     private String output;

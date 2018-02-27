@@ -2,11 +2,6 @@
 <cerimony>
     <name>Emissão LCR #7 da AC Raiz ICPEDU v2</name>
     <short_name>Emissão LCR #7</short_name>
-    <creation_date>07/04/2014</creation_date>
-    <initial_date></initial_date>
-    <final_date></final_date>
-    <initial_time></initial_time>
-    <final_time></final_time>
     <local>Sala cofre da UFSC</local>
     <requirements>
       <item>smartcards</item>
@@ -16,51 +11,49 @@
       <item>caneta</item>
     </requirements>
     <steps>
-        <step id="2" name="Entrega dos envelopes" time="">
+        <step name="Entrega dos envelopes">
             <description>Entrega dos envelopes aos membros dos grupos</description>
             <input>Envelopes lacrados com smartcards, PINs e backup de PINs</input>
             <output>Cada envelope de posse da respectiva pessoa/papel a ser desempenhado</output>
-            <observation>Teste</observation>
-            <photo></photo>
         </step>
-        <step id="3" name="Dispositivos em operação" time="">
+        <step name="Dispositivos em operação">
             <description>Colocar a máquina hospedeira e o HSM em operação</description>
             <input>Máquina hospedeira pré-configurada. Máquina hospedeira e HSMs não bootados. Envelopes com usuário e senha de acesso ao SO. Envelopes com smartcards e PINs já distribuidos. Datashow, pen drive.</input>
             <output>Máquina hospedeira e HSMs bootados.</output>
             <observation>Os equipamentos com a AC Raiz e o HSM devem ser ligados e disponibilizados aos operadores. Login na máquina hospedeira com usuário e senha criado na cerimônia da AC Raiz.</observation>
         </step>
-        <step id="4" name="Relógio da máquina hospedeira" time="">
+        <step name="Relógio da máquina hospedeira">
             <description>Acertar relógio da máquina hospedeira</description>
             <input type="text" value="" resume="no">Relógio da máquina sincronizado com Observatório Nacional. Usar website: www.on.br</input>
             <output type="text" value="" resume="no">Máquina hospedeira com relógio atualizado, em horário UTC.</output>
             <observation>Verificar e se necessário, acertar o relógio da máquina hospedeira, em horário UTC(sem aplicação de timezone)</observation>
         </step>
-        <step id="5" name="Inicializar VMWare Player" time="">
+        <step name="Inicializar VMWare Player">
             <description>Inicializar VMWare Player</description>
             <input type="text" value="" resume="no">Ir na opção Aplicativos -> Sistema -> VMWare Player</input>
             <output type="text" value="" resume="no">VMWare player inicializado</output>
         </step>
-        <step id="6" name="Inicializar VM AC Raiz" time="">
+        <step name="Inicializar VM AC Raiz">
             <description>Inicializar VM AC Raiz ICPEDU v2</description>
             <input type="text" value="" resume="no">Selecionar Ubuntu_AC_Raiz_ICPEDU_V2 e clicar em "Play virtual machine"</input>
             <output type="text" value="" resume="no">Máquina virtual inicializada</output>
         </step>
-        <step id="7" name="Ajustar relógio da VM" time="">
+        <step name="Ajustar relógio da VM">
             <description>Ajustar relógio da máquina virtual</description>
             <input type="text" value="" resume="no">Relógio de máquina sincronizada com Observatório Nacional</input>
             <output type="text" value="" resume="no">Máquina hospedeira com relógio atualizado em horário UTC</output>
         </step>
-        <step id="8" name="Acertar relógio do HSM operacional" time="">
+        <step name="Acertar relógio do HSM operacional">
             <description>Acertar relógio do HSM operacional</description>
             <input type="text" value="" resume="no">Em Desktop da VM clicar no icone 'conectar HSM ICPEDU'. Conectar ao HSM na opção 'Conect to HSM'.  Conferir o IP 192.168.1.1 e porta 5000. Opção System>Time no cliente java do HSM</input>
             <output type="text" value="" resume="no">Relógio acertado</output>
         </step>
-        <step id="9" name="Liberar a chave privada" time="">
+        <step name="Liberar a chave privada">
             <description>Liberar a chave privada da AC Raiz para uso</description>
             <input type="text" resume="no">Em HSM operacional Accounts and Keys > Keys > Load Key. Parametros Chave-ac-raiz-icpedu-v2-2012, numero de usos = 100, tempo infinito. Clicar em "Load Key"</input>
             <output type="text" resume="no">Chave Chave-ac-raiz-icpedu-v2-2012 carregada. Number of Keys:100 Time to use: infinito</output>
         </step>
-        <step id="10" name="Criar pasta na máquina virtual" time="">
+        <step name="Criar pasta na máquina virtual">
             <description>Criar pasta na máquina virtual</description>
             <input type="text" resume="no">Logado na VM com o usuário icpedu do SO</input>
             <output type="text" resume="no">Pasta criada</output>

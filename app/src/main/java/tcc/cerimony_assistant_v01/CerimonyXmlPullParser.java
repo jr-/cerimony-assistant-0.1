@@ -46,17 +46,10 @@ public class CerimonyXmlPullParser {
                         break;
                     case XmlPullParser.TEXT:
                         curText = xpp.getText();
-                        Log.v("bla", curText);
                         break;
                     case XmlPullParser.END_TAG:
                         if (tagname.equalsIgnoreCase("name")) {
                             cerimony.setCName(curText);
-                        } else if (tagname.equalsIgnoreCase("creation_date")) {
-                            cerimony.setCreationDate(curText);
-                        } else if (tagname.equalsIgnoreCase("initial_date")) {
-                            cerimony.setInitialDate(curText);
-                        } else if (tagname.equalsIgnoreCase("final_date")) {
-                            cerimony.setFinalDate(curText);
                         } else if (tagname.equalsIgnoreCase("local")) {
                             cerimony.setLocal(curText);
                         } else if (tagname.equalsIgnoreCase("short_name")) {

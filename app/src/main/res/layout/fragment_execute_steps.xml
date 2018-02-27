@@ -93,7 +93,7 @@
             android:layout_below="@+id/text_output"
             />
 
-        <TextView
+        <EditText
             android:id="@+id/text_observation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

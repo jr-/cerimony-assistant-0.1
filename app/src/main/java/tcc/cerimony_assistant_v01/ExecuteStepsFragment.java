@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -84,8 +85,8 @@ public class ExecuteStepsFragment extends Fragment {
             final TextView output_tv = ((TextView) rootView.findViewById(R.id.text_output));
             output_tv.setText("\u2022 " + curStep.getOutput());
 
-            final TextView observation_tv = ((TextView) rootView.findViewById(R.id.text_observation));
-            observation_tv.setText("\u2022 " + curStep.getObservation());
+            final EditText observation_et = ((EditText) rootView.findViewById(R.id.text_observation));
+            observation_et.setText(curStep.getObservation());
 
             final Button nextBtn = (Button) rootView.findViewById(R.id.next_step_button);
             Log.v("stepsize", "" + steps.size());
@@ -98,7 +99,9 @@ public class ExecuteStepsFragment extends Fragment {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(curDateTime);
                     String curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+                    String observation = observation_et.getText().toString();
                     curStep.setTime(curTime);
+                    curStep.setObservation(observation);
 
                     //dinamically modify GUI to step(1) at step(size-1)
                     stepNumber++;
@@ -110,7 +113,7 @@ public class ExecuteStepsFragment extends Fragment {
                         description_tv.setText(curStep.getDescription());
                         input_tv.setText("\u2022 " + curStep.getInput());
                         output_tv.setText("\u2022 " + curStep.getOutput());
-                        observation_tv.setText("\u2022 " + curStep.getObservation());
+                        observation_et.setText(curStep.getObservation());
 
                         if (stepNumber == steps.size() - 1) {
                             nextBtn.setBackgroundColor(Color.GREEN);
