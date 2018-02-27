@@ -60,13 +60,14 @@ public class ExecuteStepsFragment extends Fragment {
             cal.setTime(curDateTime);
             String curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
             String curDate = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR);
-            String rgDate = cal.get(Calendar.YEAR) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH);
+            String rgDate = cal.get(Calendar.YEAR) + "." +  (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.DAY_OF_MONTH);
 
             selectedCerimony.setInitialDate(curDate);
             selectedCerimony.setInitialTime(curTime);
 
             //create folder for started ceremony
             final String folderName = rgDate + " - " + curTime + " - " + selectedCerimony.getShortName();
+            selectedCerimony.setFolderName(folderName);
             File folder = new File(Environment.getExternalStorageDirectory(), "ceremony-assistant/final/" + folderName);
             folder.mkdirs();
 

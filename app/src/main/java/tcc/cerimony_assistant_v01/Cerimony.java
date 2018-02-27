@@ -20,6 +20,7 @@ public class Cerimony {
     private List<Participant> participants = new ArrayList<Participant>();
     private List<Step> steps = new ArrayList<Step>();
     private List<String> requirements = new ArrayList<String>();
+    private String folderName;
 
     public Cerimony() {}
 
@@ -33,6 +34,14 @@ public class Cerimony {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
+    }
+
+    public String getFolderName() {
+        return folderName;
+    }
+
+    public void setFolderName(String folderName) {
+        this.folderName = folderName;
     }
 
     public String getInitialTime() {
