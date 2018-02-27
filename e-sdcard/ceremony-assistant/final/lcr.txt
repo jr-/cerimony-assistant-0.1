@@ -1,0 +1,17 @@
+Cerimônia de Emissão LCR da AC Raiz ICPEDU v2
+Local: Sala cofre da UFSC
+Data de Inicio: 27/02/2018
+Data de Termino: 27/02/2018
+Horário de Inicio: 14:00
+Horário de Termino: 15:00
+Requisitos: Smartcards, HSM, envelopes para smartcards, cola, caneta.
+Participantes:
+Anderson Luiz Silvério - Operador - LabSEC - anderson.luiz@inf.ufsc.br
+
+---------------------------------------------------------------------
+Passo 0: Entrega dos envelopes - 14:02
+Descrição: Entrega dos envelopes aos membros dos grupos
+Entrada: Envelopes lacrados com smartcards, PINs e backup de PINs
+Saida: Cada envelope de posse da respectiva pessoa/papel a ser desempenhado
+Observação: Exemplo... Estava faltando um envelope
+---------------------------------------------------------------------

@@ -120,48 +120,49 @@ public class ExecuteStepsFragment extends Fragment {
                             nextBtn.setBackgroundColor(Color.GREEN);
                             nextBtn.setText("Finalizar");
                         }
-                        if (stepNumber == steps.size()) {
-                            //end of ceremony, save, feedbackmessage in the initial activity?
-                            File file;
-                            File file2;
+                    }
 
-                            cal = Calendar.getInstance();
-                            cal.setTime(curDateTime);
-                            curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
-                            String curDate = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR);
+                    if (stepNumber == steps.size()) {
+                        //end of ceremony, save, feedbackmessage in the initial activity?
+                        File file;
+                        File file2;
 
-                            selectedCerimony.setFinalDate(curDate);
-                            selectedCerimony.setFinalTime(curTime);
+                        cal = Calendar.getInstance();
+                        cal.setTime(curDateTime);
+                        curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
+                        String curDate = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR);
 
-                            if (isExternalStorageWritable()) {
-                                String root_sd = Environment.getExternalStorageDirectory().toString();
-                                File dir = new File(root_sd + "/ceremony-assistant/final/" + folderName);
-                                dir.mkdirs();
-                                try {
-                                    file = new File(dir, selectedCerimony.getShortName().replaceAll("\\s", "") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".xml");
-                                    file.createNewFile();
-                                    FileOutputStream f = new FileOutputStream(file);
-                                    String xmlData = selectedCerimony.toXML();
-                                    f.write(xmlData.getBytes());
-                                    f.close();
+                        selectedCerimony.setFinalDate(curDate);
+                        selectedCerimony.setFinalTime(curTime);
 
-                                    file2 = new File(dir, selectedCerimony.getShortName().replaceAll("\\s", "") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".txt");
-                                    file2.createNewFile();
-                                    FileOutputStream f2 = new FileOutputStream(file);
-                                    String txtData = selectedCerimony.toTXT();
-                                    f2.write(txtData.getBytes());
-                                    f2.close();
+                        if (isExternalStorageWritable()) {
+                            String root_sd = Environment.getExternalStorageDirectory().toString();
+                            File dir = new File(root_sd + "/ceremony-assistant/final/" + folderName);
+                            dir.mkdirs();
+                            try {
+//                                    file = new File(dir, selectedCerimony.getShortName().replaceAll("\\s", "") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".xml");
+//                                    file.createNewFile();
+//                                    FileOutputStream f = new FileOutputStream(file);
+//                                    String xmlData = selectedCerimony.toXML();
+//                                    f.write(xmlData.getBytes());
+//                                    f.close();
 
-                                    //send the information about the new file and folders to scanner
-                                    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                                    intent.setData(Uri.fromFile(file));
-                                    getActivity().sendBroadcast(intent);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+                                file2 = new File(dir, selectedCerimony.getShortName().replaceAll("\\s", "") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".txt");
+                                file2.createNewFile();
+                                FileOutputStream f2 = new FileOutputStream(file2);
+                                String txtData = selectedCerimony.toTXT();
+                                f2.write(txtData.getBytes());
+                                f2.close();
+
+                                //send the information about the new file and folders to scanner
+                                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                                intent.setData(Uri.fromFile(file2));
+                                getActivity().sendBroadcast(intent);
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-
                         }
+
                     }
                 }
             });

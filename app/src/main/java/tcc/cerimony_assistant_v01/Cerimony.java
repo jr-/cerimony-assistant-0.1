@@ -166,6 +166,46 @@ public class Cerimony {
     }
 
     public String toTXT() {
-        return "";
+
+        String ceremony = name + "\n"
+                + "Local: " + local + "\n"
+                + "Data de início: " + initialDate + "\n"
+                + "Data de término: " + finalDate + "\n"
+                + "Horário de início: " + initialTime + "\n"
+                + "Horário de término: " + finalTime + "\n"
+                + "Requisitos:";
+
+        if(requirements.size() > 0) {
+            if(requirements.size() > 2) {
+                for(int i = 0; i < requirements.size()-2; i++) {
+                    ceremony += " " + requirements.get(i) + ",";
+                }
+            }
+            if(requirements.size() != 1) {
+                ceremony += " " + requirements.get(requirements.size()-2) + " e";
+            }
+            ceremony += " " + requirements.get(requirements.size()-1) + ".";
+        }
+        ceremony += "\n";
+        if(participants.size() > 0) {
+            ceremony += "Participantes:\n";
+            for(int i = 0; i < participants.size(); i++) {
+                Participant cp = participants.get(i);
+                ceremony += cp.getPName() + " - " + cp.getCargo() + " - " + cp.getUnidade() + " - " + cp.getEmail() + "\n";
+            }
+        }
+        ceremony += "-----------------------------------------------------------------------------------------------\n";
+        if(steps.size() > 0) {
+            for(int i = 0; i < steps.size(); i++) {
+                Step cs = steps.get(i);
+                ceremony += "Passo " + i + ": " + cs.getSName() + " - " + cs.getTime() + "\n"
+                          + "Descrição: " + cs.getDescription() + "\n"
+                          + "Entrada: " + cs.getInput() + "\n"
+                          + "Saída: " + cs.getOutput() + "\n"
+                          + "Observações: " + cs.getObservation() + "\n";
+                ceremony += "-----------------------------------------------------------------------------------------------\n";
+            }
+        }
+        return ceremony;
     }
 }
