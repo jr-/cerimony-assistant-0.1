@@ -78,17 +78,17 @@ public class ParticipantsFragment extends android.support.v4.app.Fragment {
 
         //display dinamycally the participants in a tablelayout
         TableLayout table = (TableLayout)view.findViewById(R.id.tableLayout);
-        CheckBox cb;
+        //CheckBox cb;
         Spinner spinner;
-        final ArrayList<CheckBox> cbData = new ArrayList<CheckBox>();
+        //final ArrayList<CheckBox> cbData = new ArrayList<CheckBox>();
         final ArrayList<Spinner> spinnerData = new ArrayList<Spinner>();
         for(int i = 0; i < participants.size(); i++) {
             TableRow row = (TableRow)LayoutInflater.from(getActivity()).inflate(R.layout.attrib_row_participants, null);
             ((TextView)row.findViewById(R.id.text_participant)).setText(participants.get(i).getPName());
-            cb = (CheckBox)row.findViewById(R.id.check_box_participant);
+            //cb = (CheckBox)row.findViewById(R.id.check_box_participant);
             spinner = (Spinner)row.findViewById(R.id.spinner_participant);
             spinnerData.add(spinner);
-            cbData.add(cb);
+          //  cbData.add(cb);
             table.addView(row);
         }
         table.requestLayout();
@@ -101,25 +101,27 @@ public class ParticipantsFragment extends android.support.v4.app.Fragment {
             Participant participant;
             List<Participant> cer_participants = new ArrayList<Participant>();
 
-            for(int i = 0; i < cbData.size(); i++) {
-                if (cbData.get(i).isChecked()) {
+            for(int i = 0; i < participants.size(); i++) {
+                String pRole = spinnerData.get(i).getSelectedItem().toString();
+                if (!"Nenhuma".equalsIgnoreCase(pRole)) {
                     participant = participants.get(i);
-                    String pRole = spinnerData.get(i).getSelectedItem().toString();
                     participant.setCargo(pRole);
                     cer_participants.add(participant);
                 }
             }
+            CharSequence feedback_text;
             if(cer_participants.size() == 0) {
-                //display feedback message
-                Context context = getContext();
-                CharSequence text = "Nenhum participante foi confirmado";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                feedback_text = "Nenhum participante foi confirmado";
             } else {
+                feedback_text = "Participantes confirmados com sucesso";
                 CCerimonies.getInstance().getSelectedCerimony().setParticipants(cer_participants);
             }
+                //display feedback message
+                Context context = getContext();
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, feedback_text, duration);
+                toast.show();
             }
         });
         return view;
