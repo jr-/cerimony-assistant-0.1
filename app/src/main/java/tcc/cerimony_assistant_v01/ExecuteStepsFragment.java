@@ -76,7 +76,7 @@ public class ExecuteStepsFragment extends Fragment {
             curStep = steps.get(stepNumber);
 
             //dinamically modify GUI to step(0)
-            getActivity().setTitle(selectedCerimony.getShortName() + " @ " + "Passo " + stepNumber);
+            getActivity().setTitle(selectedCerimony.getShortName() + " - " + "Passo " + stepNumber);
             final TextView description_tv = ((TextView) rootView.findViewById(R.id.description_text));
             description_tv.setText(curStep.getDescription());
 

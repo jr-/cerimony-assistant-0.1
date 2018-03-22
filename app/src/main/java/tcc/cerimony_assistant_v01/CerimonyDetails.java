@@ -16,11 +16,15 @@ public class CerimonyDetails extends AppCompatActivity {
     private CeremonyDetailsPageAdapter mCMPageAdapter;
 
     private ViewPager mViewPager;
+    public Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cerimony_details);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         mCMPageAdapter = new CeremonyDetailsPageAdapter(getSupportFragmentManager());
 

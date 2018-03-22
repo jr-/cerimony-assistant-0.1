@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,15 +34,22 @@ public class CerimonyDetailsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         String cerimonyPath = "";
         String cerimonyFileName = "";
+        Cerimony cerimony;
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             cerimonyFileName = intent.getStringExtra(Intent.EXTRA_TEXT);
             cerimonyPath = "new/"+cerimonyFileName;
             CCerimonies.getInstance().setSelectedCerimony(cerimonyFileName);
-            Cerimony cerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyFileName);
+            cerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyFileName);
             cerimony = CerimonyXmlPullParser.getCerimonyFromFile(getActivity(), "new/"+cerimonyFileName, cerimony);
             ((TextView) rootView.findViewById(R.id.cerimonydetails_name))
             .setText(cerimony.getCName());
+
+            //dinamically modify GUI
+            String activity_title = ((CerimonyDetails) getActivity()).mToolbar.getTitle().toString();
+            String format_title = activity_title + " - " + cerimony.getShortName();
+            ((CerimonyDetails) getActivity()).mToolbar.setTitle(format_title);
         }
+
 
         Button btn = (Button) rootView.findViewById(R.id.start_cerimony_button);
         final String finalCerimonyNewPath = cerimonyPath;
