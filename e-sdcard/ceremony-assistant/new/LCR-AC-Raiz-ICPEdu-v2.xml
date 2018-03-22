@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cerimony>
+    <name>Emissão LCR #7 da AC Raiz ICPEDU v2</name>
+    <short_name>Emissão LCR #7</short_name>
+    <local>Sala cofre da UFSC</local>
+    <requirements>
+      <item>smartcards</item>
+      <item>HSM</item>
+      <item>envelopes para smartcards</item>
+      <item>cola</item>
+      <item>caneta</item>
+    </requirements>
+    <steps>
+        <step name="Entrega dos envelopes">
+            <description>Entrega dos envelopes aos membros dos grupos</description>
+            <input>Envelopes lacrados com smartcards, PINs e backup de PINs</input>
+            <output>Cada envelope de posse da respectiva pessoa/papel a ser desempenhado</output>
+            <observation>Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo</observation>
+        </step>
+        <step name="Dispositivos em operação">
+            <description>Colocar a máquina hospedeira e o HSM em operação</description>
+            <input>Máquina hospedeira pré-configurada. Máquina hospedeira e HSMs não bootados. Envelopes com usuário e senha de acesso ao SO. Envelopes com smartcards e PINs já distribuidos. Datashow, pen drive.</input>
+            <output>Máquina hospedeira e HSMs bootados.</output>
+            <observation>Os equipamentos com a AC Raiz e o HSM devem ser ligados e disponibilizados aos operadores. Login na máquina hospedeira com usuário e senha criado na cerimônia da AC Raiz.</observation>
+        </step>
+        <step name="Relógio da máquina hospedeira">
+            <description>Acertar relógio da máquina hospedeira</description>
+            <input>Relógio da máquina sincronizado com Observatório Nacional. Usar website: www.on.br</input>
+            <output>Máquina hospedeira com relógio atualizado, em horário UTC.</output>
+            <observation>Verificar e se necessário, acertar o relógio da máquina hospedeira, em horário UTC(sem aplicação de timezone)</observation>
+        </step>
+        <step name="Inicializar VMWare Player">
+            <description>Inicializar VMWare Player</description>
+            <input>Ir na opção Aplicativos -> Sistema -> VMWare Player</input>
+            <output>VMWare player inicializado</output>
+        </step>
+        <step name="Inicializar VM AC Raiz">
+            <description>Inicializar VM AC Raiz ICPEDU v2</description>
+            <input>Selecionar Ubuntu_AC_Raiz_ICPEDU_V2 e clicar em "Play virtual machine"</input>
+            <output>Máquina virtual inicializada</output>
+            <observation>Caso apareça alguma mensagem de dispositivo da WebCam não conhecido, clicar em ok. Caso a VM não apareça listada, deve clicar em “Open Virtual Machine”, no menu à esquerda, e selecionar o arquivo  Ubuntu_AC_Raiz_ICPEDU_V2, dentro da pasta de mesmo nome.</observation>
+        </step>
+        <step name="Ajustar relógio da VM">
+            <description>Ajustar relógio da máquina virtual</description>
+            <input>Relógio da máquina sincronizada com Observatório Nacional</input>
+            <output>Máquina hospedeira com relógio atualizado em horário UTC</output>
+            <observation>Verificar e se necessário, acertar o relógio da máquina virtual, em horário UTC (sem aplicação de timezone).</observation>
+        </step>
+        <step name="Acertar relógio do HSM operacional">
+            <description>Acertar relógio do HSM operacional</description>
+            <input>Em Desktop da VM clicar no icone 'conectar HSM ICPEDU'. Conectar ao HSM na opção 'Conect to HSM'.  Conferir o IP 192.168.1.1 e porta 5000. Opção System>Time no cliente java do HSM</input>
+            <output>Relógio acertado</output>
+            <observation>Utilizar a interface remota do HSM para verificar o horário do HSM e se necessário corrigi-lo. ATENÇÃO: UTC. Sugestão: Definir 2 minutos a mais do que o relógio da máquina hospedeira. Pressionar o "Define HSM time" no momento em que o relógio da máquina hospedeira marcar a hora definida para o relogio do HSM. O "OK" para o PIN do segundo administrador deve ser dado apenas quando a hora da máquina hospedeira indicar 10 segundos a menos do que hora definida para o HSM. Conferir se o endereço IP da interface de rede ligada ao HSM é 192.168.1.5</observation>
+        </step>
+        <step name="Liberar a chave privada">
+            <description>Liberar a chave privada da AC Raiz para uso</description>
+            <input>Em HSM operacional Accounts and Keys > Keys > Load Key. Parametros Chave-ac-raiz-icpedu-v2-2012, numero de usos = 100, tempo infinito. Clicar em "Load Key"</input>
+            <output>Chave Chave-ac-raiz-icpedu-v2-2012 carregada. Number of Keys:100 Time to use: infinito</output>
+            <observation>A chave privada será usada pelo SGCI para assinar o certificado e gerar a LCR</observation>
+        </step>
+        <step name="Criar pasta na máquina virtual">
+            <description>Criar pasta na máquina virtual</description>
+            <input>Logado na VM com o usuário icpedu do SO</input>
+            <output>Pasta criada</output>
+        </step>
+        <step name="Emitir LCR">
+            <description>Emitir a LCR</description>
+            <input>No navegador Firefox usuário oper-ac-raiz -> autenticar -> ir em LCRs -> Gerar Lista de Certificados revogados -> Informe numero de dias: 113 -> Informe senha do Operador -> Gerar LCR;</input>
+            <output>LCR emitida</output>
+            <observation></observation>
+        </step>
+        <step name="Download da LCR">
+            <description>Download da LCR</description>
+            <input>LCR emitida</input>
+            <output>Arquivo lcr-ac-raiz.crl salvo na pasta da cerimônia. Feito Logoff do SGCI.</output>
+            <observation></observation>
+        </step>
+        <step name="Descarregar a chave da AC Raiz">
+            <description>Descarregar a chave da AC Raiz</description>
+            <input>Interface do HSM no menu Accounts and Keys->Keys->Unload Key-> Unload key</input>
+            <output>Chave da AC Raiz descarregada</output>
+            <observation></observation>
+        </step>
+        <step name="Fazer backup do HSM">
+            <description>Fazer backup do HSM</description>
+            <input>Realiazar a cópia de backup. Accounts Keys -> Administrator -> Backups -> Create Backup</input>
+            <output>Arquivo de backup do HSM operacional salvo na pasta da cerimônia</output>
+            <observation></observation>
+        </step>
+        <step name="Desligar o HSM">
+            <description>Desligar o HSM</description>
+            <input>Interface do HSM no menu System -> Shutdown -> shutdown HSM</input>
+            <output>HSM desligado</output>
+            <observation></observation>
+        </step>
+        <step name="Fazer backup do SGCI">
+            <description>Fazer backup do SGCI</description>
+            <input>Login com usuário criador no SGCI; criador -> backup -> digitar senha do criador -> arquivo para download -> Botão direito do mouse -> Save as -> Seleciona pasta</input>
+            <output>Arquivo de backup do SGCI salvo na pasta da cerimônia. Feito Logoff no SGCI</output>
+            <observation></observation>
+        </step>
+        <step name="Copiar arquivos para o aplicativo">
+            <description>Copiar arquivos da pasta da cerimônia pro aplicativo</description>
+            <input>Gerar SHA1 dos arquivos da pasta; no terminal digite # Sha1sum * > hash.txt pasta-da-cerimonia</input>
+            <output>Arquivos da pasta e arquivo hash salvos na pasta do aplicativo</output>
+            <observation></observation>
+        </step>
+        <step name="Desligar a VM">
+            <description>Desligar a VM</description>
+            <input></input>
+            <output>Maquina Virtual desligada</output>
+            <observation></observation>
+        </step>
+        <step name="Desligar a Maquina Hospedeira">
+            <description>Desligar a Maquina Hospedeira</description>
+            <input></input>
+            <output>Maquina hospedeira desligada</output>
+            <observation></observation>
+        </step>
+        <step name="Guardar novamente os smartcards">
+            <description>Guardar novamente os smartcards</description>
+            <input></input>
+            <output>Envelopes lacrados e assinados</output>
+            <observation>Os membros de todos os grupos devem colocar os smartcards em envelopes, com seus respectivos PINS, lacrá-los, datá-los e assiná-los</observation>
+        </step>
+    </steps>
+</cerimony>

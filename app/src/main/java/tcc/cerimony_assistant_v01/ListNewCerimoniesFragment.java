@@ -39,16 +39,25 @@ public class ListNewCerimoniesFragment extends Fragment {
 //        }
 //
 //
-//        List<String> newCerimoniesList = new ArrayList<String>(Arrays.asList(fileNames));
-        List<String> newCerimoniesList = new ArrayList<>();
+        final List<String> cerimonies_file_names = new ArrayList<>();
+        List<String> cerimonies_nice_names = new ArrayList<>();
         String root_sd = Environment.getExternalStorageDirectory().toString();
         File file = new File(root_sd + "/ceremony-assistant/new/");
         File list[] = file.listFiles();
+        String ceremony_name;
         for( int i=0; i < list.length; i++) {
-            newCerimoniesList.add(list[i].getName());
+            ceremony_name = list[i].getName();
+            cerimonies_file_names.add(ceremony_name);
+            //manipulate file names to nice names
+            //remove the extension file name
+            ceremony_name = ceremony_name.substring(0, ceremony_name.lastIndexOf("."));
+
+            ceremony_name = ceremony_name.replaceAll("-", " ");
+
+            cerimonies_nice_names.add(ceremony_name);
         }
         //instancia o singleton
-        CCerimonies.getInstance().setCerimonies(newCerimoniesList);
+        CCerimonies.getInstance().setCerimonies(cerimonies_file_names);
 
         // Now that we have some dummy forecast data, create an ArrayAdapter.
         // The ArrayAdapter will take data from a source (like our dummy forecast) and
@@ -58,7 +67,7 @@ public class ListNewCerimoniesFragment extends Fragment {
                         getActivity(), // The current context (this activity)
                         R.layout.list_item_newcerimonies, // The name of the layout ID.
                         R.id.list_item_newcerimonies_textview, // The ID of the textview to populate.
-                        newCerimoniesList);
+                        cerimonies_nice_names);
 
         View rootView = inflater.inflate(R.layout.fragment_list_new_cerimonies, container, false);
 
@@ -68,8 +77,8 @@ public class ListNewCerimoniesFragment extends Fragment {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String cerimonyFileName = mNewCerimoniesAdapter.getItem(position);
-
+                //String cerimonyFileName = mNewCerimoniesAdapter.getItem(position);
+                String cerimonyFileName = cerimonies_file_names.get(position);
                 Intent intent = new Intent(getActivity(), CerimonyDetails.class)
                         .putExtra(Intent.EXTRA_TEXT, cerimonyFileName);
                 startActivity(intent);
