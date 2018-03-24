@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,7 @@ import java.util.List;
  */
 public class CerimonyDetailsFragment extends Fragment {
     private static final String TAG = "CerimonyDetailsFragment";
-
+    private boolean first_time = true;
     public CerimonyDetailsFragment() {
     }
 
@@ -45,9 +47,9 @@ public class CerimonyDetailsFragment extends Fragment {
             .setText(cerimony.getCName());
 
             //dinamically modify GUI
-            String activity_title = ((CerimonyDetails) getActivity()).mToolbar.getTitle().toString();
-            String format_title = activity_title + " - " + cerimony.getShortName();
+            String format_title = "Abertura da Ata" + " - " + cerimony.getShortName();
             ((CerimonyDetails) getActivity()).mToolbar.setTitle(format_title);
+            //((CerimonyDetails) getActivity()).mViewPager.setCurrentItem(2);
         }
 
 
@@ -80,4 +82,15 @@ public class CerimonyDetailsFragment extends Fragment {
 
         return rootView;
     }
+
+    public void onStart(){
+        super.onStart();
+        if(first_time == true) {
+            ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.vp);
+            viewPager.setCurrentItem(2);
+            first_time = false;
+        }
+    }
+
+
 }

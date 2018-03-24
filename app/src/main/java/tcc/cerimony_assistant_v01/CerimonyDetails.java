@@ -15,7 +15,7 @@ public class CerimonyDetails extends AppCompatActivity {
 
     private CeremonyDetailsPageAdapter mCMPageAdapter;
 
-    private ViewPager mViewPager;
+    public ViewPager mViewPager;
     public Toolbar mToolbar;
 
     @Override
@@ -28,7 +28,7 @@ public class CerimonyDetails extends AppCompatActivity {
 
         mCMPageAdapter = new CeremonyDetailsPageAdapter(getSupportFragmentManager());
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.vp);
         setupViewPager(mViewPager);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -38,8 +38,9 @@ public class CerimonyDetails extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         CeremonyDetailsPageAdapter adapter = new CeremonyDetailsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new CerimonyDetailsFragment(), "Detalhes");
-        adapter.addFragment(new ParticipantsFragment(), "Participantes");
         adapter.addFragment(new RequirementsFragment(), "Requisitos");
+        adapter.addFragment(new ParticipantsFragment(), "Participantes");
+
         viewPager.setAdapter(adapter);
     }
 

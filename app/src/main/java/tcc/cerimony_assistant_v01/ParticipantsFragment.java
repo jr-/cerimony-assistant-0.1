@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Environment;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,16 +114,25 @@ public class ParticipantsFragment extends android.support.v4.app.Fragment {
             CharSequence feedback_text;
             if(cer_participants.size() == 0) {
                 feedback_text = "Nenhum participante foi confirmado";
-            } else {
-                feedback_text = "Participantes confirmados com sucesso";
-                CCerimonies.getInstance().getSelectedCerimony().setParticipants(cer_participants);
-            }
                 //display feedback message
                 Context context = getContext();
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, feedback_text, duration);
                 toast.show();
+            } else {
+                feedback_text = "Participantes confirmados com sucesso";
+                CCerimonies.getInstance().getSelectedCerimony().setParticipants(cer_participants);
+                //display feedback message
+                Context context = getContext();
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, feedback_text, duration);
+                toast.show();
+                ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.vp);
+                viewPager.setCurrentItem(1);
+            }
+
             }
         });
         return view;

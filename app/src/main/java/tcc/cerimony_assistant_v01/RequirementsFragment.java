@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Environment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +81,8 @@ public class RequirementsFragment extends android.support.v4.app.Fragment {
 
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
+                    ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.vp);
+                    viewPager.setCurrentItem(0);
                 } else {
                     CCerimonies.getInstance().getSelectedCerimony().setConfirmRequirements(false);
                     Context context = getContext();
