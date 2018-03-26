@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,14 +44,39 @@ public class CerimonyDetailsFragment extends Fragment {
             CCerimonies.getInstance().setSelectedCerimony(cerimonyFileName);
             cerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyFileName);
             cerimony = CerimonyXmlPullParser.getCerimonyFromFile(getActivity(), "new/"+cerimonyFileName, cerimony);
-            ((TextView) rootView.findViewById(R.id.cerimonydetails_name))
-            .setText(cerimony.getCName());
 
             //dinamically modify GUI
             String format_title = "Abertura da Ata" + " - " + cerimony.getShortName();
             ((CerimonyDetails) getActivity()).mToolbar.setTitle(format_title);
             //((CerimonyDetails) getActivity()).mViewPager.setCurrentItem(2);
+
+            TextView tv_name = ((TextView) rootView.findViewById(R.id.c_details_name));
+            tv_name.setText(Html.fromHtml("<b>Nome da cerimônia:</b> " + cerimony.getCName()));
+
+            TextView tv_participants = ((TextView) rootView.findViewById(R.id.c_details_participants));
+            String participants_text;
+            List<Participant> participants = cerimony.getParticipants();
+            if(participants.size() == 0) {
+                participants_text = "<i>Nenhum participante confirmado!</i>";
+            } else {
+                participants_text = "<b>Participantes confirmados:</b><br />";
+                for(int i = 0; i < participants.size(); i++) {
+                    participants_text += "\u2022 " + participants.get(i).getPName() + "<i> como </i>" + participants.get(i).getCargo() + "<br />";
+                }
+            }
+
+            tv_participants.setText(Html.fromHtml(participants_text));
+
+            TextView tv_requirements = ((TextView) rootView.findViewById(R.id.c_details_requirements));
+            String requirements_text = "";
+            boolean isConfirmRequirements = CCerimonies.getInstance().getSelectedCerimony().isConfirmRequirements();
+            if(!isConfirmRequirements) {
+                requirements_text = "<i>Os requisitos não foram confirmados!</i>";
+            }
+            tv_requirements.setText(Html.fromHtml(requirements_text));
+
         }
+
 
 
         Button btn = (Button) rootView.findViewById(R.id.start_cerimony_button);

@@ -76,9 +76,11 @@ public class ExecuteStepsFragment extends Fragment {
             curStep = steps.get(stepNumber);
 
             //dinamically modify GUI to step(0)
-            getActivity().setTitle(selectedCerimony.getShortName() + " - " + "Passo " + stepNumber);
+            String step_name = curStep.getSName();
+            getActivity().setTitle(selectedCerimony.getShortName() + " - " + step_name);
+            //getActivity().setTitle(selectedCerimony.getShortName() + " - " + "Passo " + stepNumber);
             final TextView description_tv = ((TextView) rootView.findViewById(R.id.description_text));
-            description_tv.setText(curStep.getDescription());
+            description_tv.setText("\u2022 " + curStep.getDescription());
 
             final TextView input_tv = ((TextView) rootView.findViewById(R.id.text_input));
             input_tv.setText("\u2022 " + curStep.getInput());
@@ -86,8 +88,11 @@ public class ExecuteStepsFragment extends Fragment {
             final TextView output_tv = ((TextView) rootView.findViewById(R.id.text_output));
             output_tv.setText("\u2022 " + curStep.getOutput());
 
-            final EditText observation_et = ((EditText) rootView.findViewById(R.id.text_observation));
-            observation_et.setText(curStep.getObservation());
+            final TextView observation_tv = ((TextView) rootView.findViewById(R.id.text_observation));
+            String observation_text = curStep.getObservation();
+           // if(!"".equals(observation_text)) {
+            observation_tv.setText("\u2022 " + observation_text);
+           // }
 
             final Button nextBtn = (Button) rootView.findViewById(R.id.next_step_button);
             Log.v("stepsize", "" + steps.size());
@@ -100,7 +105,7 @@ public class ExecuteStepsFragment extends Fragment {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(curDateTime);
                     String curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
-                    String observation = observation_et.getText().toString();
+                    String observation = observation_tv.getText().toString();
                     curStep.setTime(curTime);
                     curStep.setObservation(observation);
 
@@ -109,12 +114,16 @@ public class ExecuteStepsFragment extends Fragment {
                     if (stepNumber < steps.size()) {
                         curStep = steps.get(stepNumber);
 
-                        getActivity().setTitle(selectedCerimony.getShortName() + " @ " + "Passo " + stepNumber);
+                        String step_name = curStep.getSName();
+                        getActivity().setTitle(selectedCerimony.getShortName() + " - " + step_name);
 
-                        description_tv.setText(curStep.getDescription());
+                        description_tv.setText("\u2022 " + curStep.getDescription());
                         input_tv.setText("\u2022 " + curStep.getInput());
                         output_tv.setText("\u2022 " + curStep.getOutput());
-                        observation_et.setText(curStep.getObservation());
+                        String observation_text = curStep.getObservation();
+                       // if(!"".equals(observation_text)) {
+                        observation_tv.setText("\u2022 " + observation_text);
+                        //}
 
                         if (stepNumber == steps.size() - 1) {
                             nextBtn.setBackgroundColor(Color.GREEN);

@@ -49,7 +49,7 @@ public class ExecuteSteps extends AppCompatActivity {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             String folderName = CCerimonies.getInstance().getSelectedCerimony().getFolderName();
             String title = (String) this.getTitle();
-            File photo = new File(Environment.getExternalStorageDirectory(),  "ceremony-assistant/final/" + folderName + "/" + title + ".jpg");
+            File photo = new File(Environment.getExternalStorageDirectory(),  "ceremony-assistant/final/" + "evidencia-" + folderName + "/" + title + ".jpg");
             intent.putExtra(MediaStore.EXTRA_OUTPUT,
                     Uri.fromFile(photo));
             imageUri = Uri.fromFile(photo);
