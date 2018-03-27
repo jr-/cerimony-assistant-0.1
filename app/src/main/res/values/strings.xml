@@ -5,6 +5,7 @@
     <string name="title_activity_manage_participants">Gerenciar Participantes</string>
     <string name="title_activity_cerimony_details">Detalhes da Cerimonia</string>
     <string name="title_activity_execute_steps">ExecuteSteps</string>
+    <string name="title_activity_end_ceremony">Fechamento da Ata</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

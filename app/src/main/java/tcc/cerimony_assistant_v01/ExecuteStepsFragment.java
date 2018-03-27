@@ -89,10 +89,16 @@ public class ExecuteStepsFragment extends Fragment {
             output_tv.setText("\u2022 " + curStep.getOutput());
 
             final TextView observation_tv = ((TextView) rootView.findViewById(R.id.text_observation));
+            final TextView obs_title_tv = ((TextView) rootView.findViewById(R.id.textView4));
             String observation_text = curStep.getObservation();
-           // if(!"".equals(observation_text)) {
-            observation_tv.setText("\u2022 " + observation_text);
-           // }
+            if(!"".equals(observation_text)) {
+                obs_title_tv.setText("Observações");
+                observation_tv.setText("\u2022 " + observation_text);
+            } else {
+                obs_title_tv.setText("");
+                observation_tv.setText("");
+            }
+
 
             final Button nextBtn = (Button) rootView.findViewById(R.id.next_step_button);
             Log.v("stepsize", "" + steps.size());
@@ -121,9 +127,13 @@ public class ExecuteStepsFragment extends Fragment {
                         input_tv.setText("\u2022 " + curStep.getInput());
                         output_tv.setText("\u2022 " + curStep.getOutput());
                         String observation_text = curStep.getObservation();
-                       // if(!"".equals(observation_text)) {
-                        observation_tv.setText("\u2022 " + observation_text);
-                        //}
+                        if(!"".equals(observation_text)) {
+                            obs_title_tv.setText("Observações");
+                            observation_tv.setText("\u2022 " + observation_text);
+                        } else {
+                            obs_title_tv.setText("");
+                            observation_tv.setText("");
+                        }
 
                         if (stepNumber == steps.size() - 1) {
                             nextBtn.setBackgroundColor(Color.GREEN);
@@ -167,6 +177,9 @@ public class ExecuteStepsFragment extends Fragment {
                                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                                 intent.setData(Uri.fromFile(file2));
                                 getActivity().sendBroadcast(intent);
+
+                                Intent intent2 = new Intent(getActivity(), EndCeremonyActivity.class);
+                                startActivity(intent2);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

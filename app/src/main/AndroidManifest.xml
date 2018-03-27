@@ -52,6 +52,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tcc.cerimony_assistant_v01.CerimonyDetails" />
         </activity>
+        <activity
+            android:name=".EndCeremonyActivity"
+            android:label="@string/title_activity_end_ceremony"
+            android:parentActivityName=".ExecuteSteps"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tcc.cerimony_assistant_v01.EndCeremonyActivity" />
+        </activity>
     </application>
 
 </manifest>
