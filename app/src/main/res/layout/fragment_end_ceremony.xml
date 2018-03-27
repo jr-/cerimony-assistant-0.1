@@ -13,11 +13,18 @@
     tools:showIn="@layout/activity_end_ceremony">
 
     <TextView
-        android:text="Teste"
         android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView11"
+        android:id="@+id/status"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/return_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="IR PARA A TELA PRINCIPAL" />
 </RelativeLayout>
