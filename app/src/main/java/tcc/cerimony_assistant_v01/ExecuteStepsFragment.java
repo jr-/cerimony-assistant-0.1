@@ -1,5 +1,7 @@
 package tcc.cerimony_assistant_v01;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -15,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -60,7 +63,7 @@ public class ExecuteStepsFragment extends Fragment {
             cal.setTime(curDateTime);
             String curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
             String curDate = cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR);
-            String rgDate = cal.get(Calendar.YEAR) + "." +  (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.DAY_OF_MONTH);
+            String rgDate = cal.get(Calendar.YEAR) + "." + (cal.get(Calendar.MONTH) + 1) + "." + cal.get(Calendar.DAY_OF_MONTH);
 
             selectedCerimony.setInitialDate(curDate);
             selectedCerimony.setInitialTime(curTime);
@@ -91,7 +94,7 @@ public class ExecuteStepsFragment extends Fragment {
             final TextView observation_tv = ((TextView) rootView.findViewById(R.id.text_observation));
             final TextView obs_title_tv = ((TextView) rootView.findViewById(R.id.textView4));
             String observation_text = curStep.getObservation();
-            if(!"".equals(observation_text)) {
+            if (!"".equals(observation_text)) {
                 obs_title_tv.setText("Observações");
                 observation_tv.setText("\u2022 " + observation_text);
             } else {
@@ -127,7 +130,7 @@ public class ExecuteStepsFragment extends Fragment {
                         input_tv.setText("\u2022 " + curStep.getInput());
                         output_tv.setText("\u2022 " + curStep.getOutput());
                         String observation_text = curStep.getObservation();
-                        if(!"".equals(observation_text)) {
+                        if (!"".equals(observation_text)) {
                             obs_title_tv.setText("Observações");
                             observation_tv.setText("\u2022 " + observation_text);
                         } else {
@@ -186,6 +189,46 @@ public class ExecuteStepsFragment extends Fragment {
                         }
 
                     }
+                }
+            });
+
+            final Button abort_btn = (Button) rootView.findViewById(R.id.abort_button);
+            abort_btn.setOnClickListener(new View.OnClickListener() {
+                //            @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Abortar Cerimônia");
+                    builder.setMessage("Você realmente deseja abortar a cerimônia?");
+
+                    View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.abort_dialog, (ViewGroup) getView(), false);
+                    final EditText input = (EditText) viewInflated.findViewById(R.id.input);
+                    builder.setView(viewInflated);
+
+                    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Cerimony ceremony = CCerimonies.getInstance().getSelectedCerimony();
+
+                            AbortedCeremony ac = new AbortedCeremony();
+                            ac.setReason(input.getText().toString());
+                            ac.setStep_number(stepNumber);
+
+                            ceremony.setAborted(true);
+                            ceremony.setAbortedCeremony(ac);
+
+                            Intent intent = new Intent(getActivity(), EndCeremonyActivity.class);
+                            startActivity(intent);
+
+                        }
+                    });
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.show();
                 }
             });
         }

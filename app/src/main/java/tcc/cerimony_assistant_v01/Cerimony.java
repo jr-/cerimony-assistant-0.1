@@ -17,12 +17,26 @@ public class Cerimony {
     private String finalTime;
     private String local;
     private boolean confirmRequirements = false;
+    private boolean isAborted = false;
     private List<Participant> participants = new ArrayList<Participant>();
     private List<Step> steps = new ArrayList<Step>();
     private List<String> requirements = new ArrayList<String>();
     private String folderName;
+    private AbortedCeremony abortedCeremony;
 
     public Cerimony() {}
+
+    public AbortedCeremony getAbortedCeremony() {
+        return abortedCeremony;
+    }
+
+    public void setAbortedCeremony(AbortedCeremony abortedCeremony) {
+        this.abortedCeremony = abortedCeremony;
+    }
+
+    public boolean isAborted() {return isAborted;}
+
+    public void setAborted(boolean isAborted) {this.isAborted = isAborted;}
 
     public boolean isConfirmRequirements() {return confirmRequirements;}
 

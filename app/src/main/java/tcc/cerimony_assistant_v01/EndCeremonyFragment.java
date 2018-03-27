@@ -28,8 +28,16 @@ public class EndCeremonyFragment extends Fragment {
         //dinamically modify GUI
         getActivity().setTitle("Fechamento da Ata - " + ceremony.getShortName());
         TextView status_tv = (TextView) rootView.findViewById(R.id.status);
-        //if
-        status_tv.setText("A Cerimônia terminou com sucesso!");
+
+        if(ceremony.isAborted()) {
+            AbortedCeremony ac = ceremony.getAbortedCeremony();
+            String reason = ac.getReason();
+            int step_number = ac.getStep_number();
+            status_tv.setText("A cerimônia foi abortada pelo motivo: \"" + reason +"\" no passo " + step_number);
+        } else {
+            status_tv.setText("A Cerimônia terminou com sucesso!");
+        }
+
 
         Button btn = (Button) rootView.findViewById(R.id.return_main);
         btn.setOnClickListener(new View.OnClickListener() {

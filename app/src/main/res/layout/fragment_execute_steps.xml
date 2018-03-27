@@ -21,6 +21,16 @@
         android:id="@+id/next_step_button" />
 
     <Button
+        android:text="Abortar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/next_step_button"
+        android:background="#fd0101"
+        android:id="@+id/abort_button"/>
+
+    <Button
         android:text="Voltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
