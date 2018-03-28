@@ -37,7 +37,7 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class ExecuteStepsFragment extends Fragment {
-
+    private boolean first_time = true;
     public ExecuteStepsFragment() {
     }
     int stepNumber = 0;
@@ -127,8 +127,9 @@ public class ExecuteStepsFragment extends Fragment {
                         String step_name = curStep.getSName();
                         //getActivity().setTitle(selectedCerimony.getShortName() + " - " + step_name);
                         ((ExecuteSteps) getActivity()).title_toolbar.setText(selectedCerimony.getShortName() + " - " + step_name);
-                        int steps_size = steps.size() - 1;
-                        ((ExecuteSteps) getActivity()).status_toolbar.setText("Passo " + stepNumber + " de " + steps_size);
+                        int steps_size = steps.size();
+                        int display_step_number = stepNumber + 1;
+                        ((ExecuteSteps) getActivity()).status_toolbar.setText("Passo " + display_step_number + " de " + steps_size);
 
                         description_tv.setText("\u2022 " + curStep.getDescription());
                         input_tv.setText("\u2022 " + curStep.getInput());
@@ -241,13 +242,17 @@ public class ExecuteStepsFragment extends Fragment {
 
     public void onStart() {
         super.onStart();
-        Cerimony ceremony = CCerimonies.getInstance().getSelectedCerimony();
-        List<Step> steps = ceremony.getSteps();
-        String step_name = steps.get(0).getSName();
-        int steps_size = steps.size() - 1;
-        ((ExecuteSteps) getActivity()).title_toolbar.setText(ceremony.getShortName() + " - " + step_name);
+        if(first_time) {
+            Cerimony ceremony = CCerimonies.getInstance().getSelectedCerimony();
+            List<Step> steps = ceremony.getSteps();
+            String step_name = steps.get(0).getSName();
+            int steps_size = steps.size();
+            ((ExecuteSteps) getActivity()).title_toolbar.setText(ceremony.getShortName() + " - " + step_name);
 
-        ((ExecuteSteps) getActivity()).status_toolbar.setText("Passo " + 0 + " de " + steps_size);
+            ((ExecuteSteps) getActivity()).status_toolbar.setText("Passo " + 1 + " de " + steps_size);
+
+            first_time = false;
+        }
     }
 
     /* Checks if external storage is available for read and write */
