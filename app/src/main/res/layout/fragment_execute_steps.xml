@@ -15,7 +15,7 @@
     <Button
         android:text="Avançar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="100px"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/next_step_button" />
@@ -23,7 +23,7 @@
     <Button
         android:text="Abortar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="100px"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_alignTop="@+id/next_step_button"
@@ -33,7 +33,7 @@
     <Button
         android:text="Voltar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="100px"
         android:layout_alignTop="@+id/next_step_button"
         android:layout_alignParentStart="true"
         android:id="@+id/prev_step_button" />
@@ -42,6 +42,7 @@
     <TextView
         android:text="Descrição"
         android:textStyle="bold"
+        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -59,6 +60,7 @@
 
         <TextView
             android:text="Descrição"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -69,6 +71,7 @@
 
         <TextView
             android:id="@+id/textView2"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -79,6 +82,7 @@
 
         <TextView
             android:id="@+id/text_input"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -88,6 +92,7 @@
 
         <TextView
             android:text="Objetivo"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,6 +104,7 @@
 
         <TextView
             android:id="@+id/text_output"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -107,6 +113,7 @@
 
         <TextView
             android:text="Observações"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,6 +125,7 @@
 
         <TextView
             android:id="@+id/text_observation"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

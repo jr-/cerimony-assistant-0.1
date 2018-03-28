@@ -13,7 +13,7 @@
     tools:showIn="@layout/activity_end_ceremony">
 
     <TextView
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/status"
@@ -23,7 +23,7 @@
     <Button
         android:id="@+id/return_main"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="100px"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="IR PARA A TELA PRINCIPAL" />

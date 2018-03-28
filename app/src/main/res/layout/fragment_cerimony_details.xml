@@ -13,7 +13,7 @@
     tools:showIn="@layout/activity_cerimony_details">
 
     <TextView
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/c_details_name"
@@ -21,7 +21,7 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/c_details_participants"
@@ -30,7 +30,7 @@
         android:layout_below="@+id/c_details_name"/>
 
     <TextView
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/c_details_requirements"
@@ -41,7 +41,7 @@
     <Button
         android:text="Iniciar Cerimônia"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="100px"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/start_cerimony_button" />
