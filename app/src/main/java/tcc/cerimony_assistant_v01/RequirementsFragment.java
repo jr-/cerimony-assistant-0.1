@@ -82,6 +82,9 @@ public class RequirementsFragment extends android.support.v4.app.Fragment {
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                     ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.vp);
+                    //update the content of ceremonydetailsfragment #pog
+                    android.support.v4.app.Fragment fragment = ((CeremonyDetailsPageAdapter) viewPager.getAdapter()).getItem(0);
+                    ((CerimonyDetailsFragment)fragment).update();
                     viewPager.setCurrentItem(0);
                 } else {
                     CCerimonies.getInstance().getSelectedCerimony().setConfirmRequirements(false);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -25,13 +26,14 @@ import java.util.List;
 public class CerimonyDetailsFragment extends Fragment {
     private static final String TAG = "CerimonyDetailsFragment";
     private boolean first_time = true;
+    private View mRootView;
     public CerimonyDetailsFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_cerimony_details, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_cerimony_details, container, false);
 
         // The detail Activity called via intent.  Inspect the intent for forecast data.
         Intent intent = getActivity().getIntent();
@@ -48,12 +50,12 @@ public class CerimonyDetailsFragment extends Fragment {
             //dinamically modify GUI
             String format_title = "Abertura da Ata" + " - " + cerimony.getShortName();
             ((CerimonyDetails) getActivity()).mToolbar.setTitle(format_title);
-            //((CerimonyDetails) getActivity()).mViewPager.setCurrentItem(2);
 
-            TextView tv_name = ((TextView) rootView.findViewById(R.id.c_details_name));
+
+            TextView tv_name = ((TextView) mRootView.findViewById(R.id.c_details_name));
             tv_name.setText(Html.fromHtml("<b>Nome da cerimônia:</b> " + cerimony.getCName()));
 
-            TextView tv_participants = ((TextView) rootView.findViewById(R.id.c_details_participants));
+            TextView tv_participants = ((TextView) mRootView.findViewById(R.id.c_details_participants));
             String participants_text;
             List<Participant> participants = cerimony.getParticipants();
             if(participants.size() == 0) {
@@ -67,11 +69,13 @@ public class CerimonyDetailsFragment extends Fragment {
 
             tv_participants.setText(Html.fromHtml(participants_text));
 
-            TextView tv_requirements = ((TextView) rootView.findViewById(R.id.c_details_requirements));
+            TextView tv_requirements = ((TextView) mRootView.findViewById(R.id.c_details_requirements));
             String requirements_text = "";
             boolean isConfirmRequirements = CCerimonies.getInstance().getSelectedCerimony().isConfirmRequirements();
             if(!isConfirmRequirements) {
                 requirements_text = "<i>Os requisitos não foram confirmados!</i>";
+            } else {
+                requirements_text = "<i>Os requisitos foram confirmados!</i>";
             }
             tv_requirements.setText(Html.fromHtml(requirements_text));
 
@@ -79,7 +83,7 @@ public class CerimonyDetailsFragment extends Fragment {
 
 
 
-        Button btn = (Button) rootView.findViewById(R.id.start_cerimony_button);
+        Button btn = (Button) mRootView.findViewById(R.id.start_cerimony_button);
         final String finalCerimonyNewPath = cerimonyPath;
         final String finalCerimonyLoadedPath = "load/"+cerimonyFileName;
         final String finalCerimonyFileName = cerimonyFileName;
@@ -106,7 +110,7 @@ public class CerimonyDetailsFragment extends Fragment {
             }
         });
 
-        return rootView;
+        return mRootView;
     }
 
     public void onStart(){
@@ -116,6 +120,18 @@ public class CerimonyDetailsFragment extends Fragment {
             viewPager.setCurrentItem(2);
             first_time = false;
         }
+    }
+
+    public void update(){
+        TextView tv_requirements = ((TextView) mRootView.findViewById(R.id.c_details_requirements));
+        String requirements_text = "";
+        boolean isConfirmRequirements = CCerimonies.getInstance().getSelectedCerimony().isConfirmRequirements();
+        if(!isConfirmRequirements) {
+            requirements_text = "<i>Os requisitos não foram confirmados!</i>";
+        } else {
+            requirements_text = "<i>Os requisitos foram confirmados!</i>";
+        }
+        tv_requirements.setText(Html.fromHtml(requirements_text));
     }
 
 
