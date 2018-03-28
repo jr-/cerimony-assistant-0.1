@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,8 +81,8 @@ public class ExecuteStepsFragment extends Fragment {
 
             //dinamically modify GUI to step(0)
             String step_name = curStep.getSName();
-            getActivity().setTitle(selectedCerimony.getShortName() + " - " + step_name);
-            //getActivity().setTitle(selectedCerimony.getShortName() + " - " + "Passo " + stepNumber);
+            //getActivity().setTitle(selectedCerimony.getShortName() + " - " + step_name);
+
             final TextView description_tv = ((TextView) rootView.findViewById(R.id.description_text));
             description_tv.setText("\u2022 " + curStep.getDescription());
 
@@ -124,7 +125,10 @@ public class ExecuteStepsFragment extends Fragment {
                         curStep = steps.get(stepNumber);
 
                         String step_name = curStep.getSName();
-                        getActivity().setTitle(selectedCerimony.getShortName() + " - " + step_name);
+                        //getActivity().setTitle(selectedCerimony.getShortName() + " - " + step_name);
+                        ((ExecuteSteps) getActivity()).title_toolbar.setText(selectedCerimony.getShortName() + " - " + step_name);
+                        int steps_size = steps.size() - 1;
+                        ((ExecuteSteps) getActivity()).status_toolbar.setText("Passo " + stepNumber + " de " + steps_size);
 
                         description_tv.setText("\u2022 " + curStep.getDescription());
                         input_tv.setText("\u2022 " + curStep.getInput());
@@ -233,6 +237,17 @@ public class ExecuteStepsFragment extends Fragment {
             });
         }
         return rootView;
+    }
+
+    public void onStart() {
+        super.onStart();
+        Cerimony ceremony = CCerimonies.getInstance().getSelectedCerimony();
+        List<Step> steps = ceremony.getSteps();
+        String step_name = steps.get(0).getSName();
+        int steps_size = steps.size() - 1;
+        ((ExecuteSteps) getActivity()).title_toolbar.setText(ceremony.getShortName() + " - " + step_name);
+
+        ((ExecuteSteps) getActivity()).status_toolbar.setText("Passo " + 0 + " de " + steps_size);
     }
 
     /* Checks if external storage is available for read and write */

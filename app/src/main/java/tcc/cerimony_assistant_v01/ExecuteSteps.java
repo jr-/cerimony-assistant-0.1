@@ -1,6 +1,8 @@
 package tcc.cerimony_assistant_v01;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,18 +14,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.io.File;
 
 public class ExecuteSteps extends AppCompatActivity {
 
+    public TextView title_toolbar;
+    public TextView status_toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_execute_steps);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        title_toolbar = (TextView) toolbar.findViewById(R.id.title_toolbar);
+        status_toolbar = (TextView) toolbar.findViewById(R.id.status_toolbar);
         setSupportActionBar(toolbar);
-        
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
