@@ -18,6 +18,7 @@ public class ListNewCerimonies extends AppCompatActivity {
         setContentView(R.layout.activity_list_new_cerimonies);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        this.setTitle(getResources().getString(R.string.app_name_list_ceremonies));
 
     }
 

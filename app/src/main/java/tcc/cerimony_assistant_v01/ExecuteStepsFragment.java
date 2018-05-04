@@ -121,6 +121,7 @@ public class ExecuteStepsFragment extends Fragment {
 
                     //dinamically modify GUI to step(1) at step(size-1)
                     stepNumber++;
+                    selectedCerimony.setCurrentStepNumber(stepNumber);
                     if (stepNumber < steps.size()) {
                         curStep = steps.get(stepNumber);
 
@@ -151,7 +152,7 @@ public class ExecuteStepsFragment extends Fragment {
 
                     if (stepNumber == steps.size()) {
                         //end of ceremony, save, feedbackmessage in the initial activity?
-                        File file;
+//                        File file;
                         File file2;
 
                         cal = Calendar.getInstance();
@@ -203,7 +204,7 @@ public class ExecuteStepsFragment extends Fragment {
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setTitle("Abortar Cerimônia");
-                    builder.setMessage("Você realmente deseja abortar a cerimônia?");
+                    builder.setMessage("Deseja abortar a cerimônia por qual motivo?");
 
                     View viewInflated = LayoutInflater.from(getContext()).inflate(R.layout.abort_dialog, (ViewGroup) getView(), false);
                     final EditText input = (EditText) viewInflated.findViewById(R.id.input);
@@ -220,6 +221,50 @@ public class ExecuteStepsFragment extends Fragment {
 
                             ceremony.setAborted(true);
                             ceremony.setAbortedCeremony(ac);
+
+                            File file2;
+
+                            long msTime2 = System.currentTimeMillis();
+                            Date curDateTime2 = new Date(msTime2);
+                            Calendar cal2 = Calendar.getInstance();
+                            cal2.setTime(curDateTime2);
+
+                            String curTime2 = cal2.get(Calendar.HOUR_OF_DAY) + ":" + cal2.get(Calendar.MINUTE);
+                            String curDate2 = cal2.get(Calendar.DAY_OF_MONTH) + "/" + (cal2.get(Calendar.MONTH) + 1) + "/" + cal2.get(Calendar.YEAR);
+
+                            selectedCerimony.setFinalDate(curDate2);
+                            selectedCerimony.setFinalTime(curTime2);
+
+                            if (isExternalStorageWritable()) {
+                                String root_sd = Environment.getExternalStorageDirectory().toString();
+                                File dir = new File(root_sd + "/ceremony-assistant/final/" + folderName);
+                                dir.mkdirs();
+                                try {
+//                                    file = new File(dir, selectedCerimony.getShortName().replaceAll("\\s", "") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".xml");
+//                                    file.createNewFile();
+//                                    FileOutputStream f = new FileOutputStream(file);
+//                                    String xmlData = selectedCerimony.toXML();
+//                                    f.write(xmlData.getBytes());
+//                                    f.close();
+
+                                    file2 = new File(dir, selectedCerimony.getShortName().replaceAll("\\s", "") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".txt");
+                                    file2.createNewFile();
+                                    FileOutputStream f2 = new FileOutputStream(file2);
+                                    String txtData = selectedCerimony.toTXT();
+                                    f2.write(txtData.getBytes());
+                                    f2.close();
+
+                                    //send the information about the new file and folders to scanner
+                                    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                                    intent.setData(Uri.fromFile(file2));
+                                    getActivity().sendBroadcast(intent);
+
+                                    Intent intent2 = new Intent(getActivity(), EndCeremonyActivity.class);
+                                    startActivity(intent2);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
 
                             Intent intent = new Intent(getActivity(), EndCeremonyActivity.class);
                             startActivity(intent);

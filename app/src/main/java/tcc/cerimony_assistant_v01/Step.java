@@ -14,9 +14,27 @@ public class Step {
     private String inputType;
     private String outputType;
     private String observation = "";
-    private String time;
+    private String time = "";
     private String input;
     private String output;
+    private String notes = "";
+    private String evidence = "";
+
+    public String getEvidence() {
+        return evidence;
+    }
+
+    public void setEvidence(String evidence) {
+        this.evidence = evidence;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
     public String getTime() {
         return time;

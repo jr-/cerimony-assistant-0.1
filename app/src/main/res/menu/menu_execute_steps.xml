@@ -7,4 +7,9 @@
         android:orderInCategory="100"
         android:title="Bater Foto"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/notes"
+        android:orderInCategory="100"
+        android:title="Tomar Notas"
+        app:showAsAction="never" />
 </menu>

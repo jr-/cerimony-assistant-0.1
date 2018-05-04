@@ -23,6 +23,15 @@ public class Cerimony {
     private List<String> requirements = new ArrayList<String>();
     private String folderName;
     private AbortedCeremony abortedCeremony;
+    private int currentStepNumber = 0;
+
+    public int getCurrentStepNumber() {
+        return currentStepNumber;
+    }
+
+    public void setCurrentStepNumber(int currentStepNumber) {
+        this.currentStepNumber = currentStepNumber;
+    }
 
     public Cerimony() {}
 
@@ -183,11 +192,19 @@ public class Cerimony {
 
         String ceremony = name + "\n"
                 + "Local: " + local + "\n"
-                + "Data de início: " + initialDate + "\n"
-                + "Data de término: " + finalDate + "\n"
-                + "Horário de início: " + initialTime + "\n"
-                + "Horário de término: " + finalTime + "\n"
-                + "Requisitos:";
+                + "Resultado: ";
+        if(isAborted) {
+            ceremony += "A cerimônia foi abortada pelo motivo " + abortedCeremony.getReason() + " no passo " + abortedCeremony.getStep_number()
+                      + " às " + finalTime + " do dia " + finalDate + "." + "\n";
+        } else {
+            ceremony += "A cerimônia terminou com sucesso" + "\n";
+        }
+
+        ceremony += "Data de início: " + initialDate + "\n"
+                  + "Horário de início: " + initialTime + "\n"
+                  + "Data de término: " + finalDate + "\n"
+                  + "Horário de término: " + finalTime + "\n"
+                  + "Requisitos confirmados:";
 
         if(requirements.size() > 0) {
             if(requirements.size() > 2) {
@@ -202,7 +219,7 @@ public class Cerimony {
         }
         ceremony += "\n";
         if(participants.size() > 0) {
-            ceremony += "Participantes:\n";
+            ceremony += "Participantes confirmados:\n";
             for(int i = 0; i < participants.size(); i++) {
                 Participant cp = participants.get(i);
                 ceremony += cp.getPName() + " - " + cp.getCargo() + " - " + cp.getUnidade() + " - " + cp.getEmail() + "\n";
@@ -210,15 +227,22 @@ public class Cerimony {
         }
         ceremony += "-----------------------------------------------------------------------------------------------\n";
         if(steps.size() > 0) {
-            for(int i = 0; i < steps.size(); i++) {
+            int loop_size = steps.size();
+            if(isAborted) {
+                loop_size = abortedCeremony.getStep_number() + 1;
+            }
+            for(int i = 0; i < loop_size; i++) {
                 Step cs = steps.get(i);
                 ceremony += "Passo " + i + ": " + cs.getSName() + " - " + cs.getTime() + "\n"
-                          + "Descrição: " + cs.getDescription() + "\n"
-                          + "Entrada: " + cs.getInput() + "\n"
-                          + "Saída: " + cs.getOutput() + "\n"
-                          + "Observações: " + cs.getObservation() + "\n";
+                        + "Descrição: " + cs.getDescription() + "\n"
+                        + "Entrada: " + cs.getInput() + "\n"
+                        + "Saída: " + cs.getOutput() + "\n"
+                        + "Observações: " + cs.getObservation() + "\n"
+                        + "Anotações: " + cs.getNotes() + "\n"
+                        + "Evidências: " + cs.getEvidence() + "\n";
                 ceremony += "-----------------------------------------------------------------------------------------------\n";
             }
+
         }
         return ceremony;
     }

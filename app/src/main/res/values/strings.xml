@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">cerimony-assistant-v0.1</string>
+    <string name="app_name">Assistente de Cerimônias</string>
     <string name="action_settings">Settings</string>
     <string name="list_new_cerimonies_name">Lista de Cerimônias</string>
     <string name="title_activity_manage_participants">Gerenciar Participantes</string>
     <string name="title_activity_cerimony_details">Detalhes da Cerimonia</string>
     <string name="title_activity_execute_steps">ExecuteSteps</string>
     <string name="title_activity_end_ceremony">Fechamento da Ata</string>
+    <string name="app_name_list_ceremonies">Assistente de Cerimônias - Lista de Cerimônias</string>
 
     <string-array name="role_arrays">
         <item>Nenhuma</item>
