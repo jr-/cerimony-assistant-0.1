@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cerimony>
+    <name>Implantação Aplicativo Assistente de Cerimônias</name>
+    <short_name>Implantação Assistente de Cerimônias</short_name>
+    <local>CCD-UFSC Nível 2</local>
+    <requirements>
+      <item>APK</item>
+      <item>caneta</item>
+      <item>computador</item>
+      <item>tablet</item>
+      <item>cabo usb para conectar no computador</item>
+    </requirements>
+    <steps>
+        <step name="Formatar o tablet">
+            <description>Formatar o tablet</description>
+            <input>Desligue o tablet, pressione ao mesmo tempo volume para cima + home + power, assim que aparecer a logo da samsung libere os botões, selecione a opção wipe data/factory reset</input>
+            <output>Tablet formatado na versão de fabrica</output>
+            <observation>volume = setas, power = enter button</observation>
+        </step>
+        <step name="Fazer o tutorial de configuração inicial">
+            <description>Fazer o tutorial de configuração do tablet</description>
+            <input>Selecionar o idioma e avançar, selecionar uma rede wifi avançar, definir hora manter GMT 00 avançar, concordar com os termos avançar, já tem conta google não, cadastrar agora não, desmarcar todas as opções de localização avançar, colocar nome e sobrenome no tablet, pular conta samsung</input>
+            <output>Tablet configurado</output>
+            <observation>da pra fazer sem rede wifi, o tablet não faz nenhuma atualização</observation>
+        </step>
+        <step name="Verificar se existe atualização">
+          <description>Verificar se existe atualização da versão android</description>
+          <input>Configurações -> Sobre o dispositivo -> Atualização de Software, desmarcar a opção atualização automática, tocar no botão atualizar</input>
+          <output>Tablet atualizado</output>
+        </step>
+        <step name="Esquecer rede wifi">
+          <description>Esquecer rede wifi cadastrada</description>
+          <input>Configurações -> tocar sobre a rede cadastrada -> esquecer rede</input>
+          <output>rede esquecida</output>
+        </step>
+        <step name="Tablet em modo avião">
+            <description>Deixar o tablet em modo avião e desativar wifi</description>
+            <input>Configurações, clicar na opção wifi desativando ela, e clicar no botão modo offline</input>
+            <output>Tablet em modo avião</output>
+        </step>
+        <step name="Configurar o horario">
+            <description>Deixar o tablet em GMT 00</description>
+            <input>Configurações -> Data e Hora -> Definir Hora</input>
+            <output>Tablet em GMT 00</output>
+        </step>
+        <step name="Conectar o tablet em um computador">
+            <description>Conectar o tablet em um computador offline que contenha o APK do aplicativo Assistente de Cerimônias</description>
+            <input>Pegar</input>
+            <output>Tablet conectado com sucesso em um computador offline</output>
+        </step>
+        <step name="Criar pastas">
+            <description>Criar pastas no tablet</description>
+            <input>Abrir estrutura de arquivos do computador, na raiz criar pasta ceremony-assistant e dentro dela criar pasta final e new</input>
+            <output>Pastas criadas</output>
+        </step>
+        <step name="Copiar atas de cerimonias">
+          <description>Copiar cerimonias</description>
+          <input>Se já existirem atas de cerimonias escritas em XML copia-las para dentro da pasta new</input>
+          <output>Cerimonias xml criadas</output>
+      </step>
+      <step name="Instalar o APK">
+        <description>Instalar o aplicativo atráves do APK</description>
+        <input>Meus arquivos -> pasta onde se localiza o apk, tocar no arquivo, clicar em instalar</input>
+        <output>Aplicativo instalado</output>
+        <observation>É necessário garantir permissão para instalar apks desconhecidos, o próprio tablet te redirecionará para lá, marcar o checkbox e continuar</obsrvation>
+      </step>
+      <step name="Verificar o aplicativo">
+        <description>Verificar se o aplicativo esta funcionando</description>
+        <input>Na barra de aplicativos, tocar no aplicativo assistente de cerimonias</input>
+        <output>Aplicativo aberto com sucesso</output>
+        <observation>É necessário cadastrar um participante antes de tocar em um modelo de ata de cerimônia, o aplicativo da crash com 0 participantes cadastrados</obsrvation>
+      </step>
+    </steps>
+</cerimony>
