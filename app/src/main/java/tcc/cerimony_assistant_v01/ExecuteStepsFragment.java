@@ -74,34 +74,33 @@ public class ExecuteStepsFragment extends Fragment {
             selectedCerimony.setFolderName(folderName);
             File folder = new File(Environment.getExternalStorageDirectory(), "ceremony-assistant/final/" + folderName);
             folder.mkdirs();
+            try {
+                this.copy(new File(Environment.getExternalStorageDirectory(),"ceremony-assistant/new/" + cerimonyName), new File(Environment.getExternalStorageDirectory(), "ceremony-assistant/final/" + folderName + "/original-" + cerimonyName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             //get steps and curStep = steps(0)
             final List<Step> steps = selectedCerimony.getSteps();
             curStep = steps.get(stepNumber);
 
             //dinamically modify GUI to step(0)
-            String step_name = curStep.getSName();
-            //getActivity().setTitle(selectedCerimony.getShortName() + " - " + step_name);
 
-            final TextView description_tv = ((TextView) rootView.findViewById(R.id.description_text));
-            description_tv.setText("\u2022 " + curStep.getDescription());
+            final EditText description_et = ((EditText) rootView.findViewById(R.id.description_text));
+            description_et.setText("\u2022 " + curStep.getDescription());
 
-            final TextView input_tv = ((TextView) rootView.findViewById(R.id.text_input));
-            input_tv.setText("\u2022 " + curStep.getInput());
+            final EditText input_et = ((EditText) rootView.findViewById(R.id.text_input));
+            input_et.setText("\u2022 " + curStep.getInput());
 
-            final TextView output_tv = ((TextView) rootView.findViewById(R.id.text_output));
-            output_tv.setText("\u2022 " + curStep.getOutput());
+            final EditText output_et = ((EditText) rootView.findViewById(R.id.text_output));
+            output_et.setText("\u2022 " + curStep.getOutput());
 
-            final TextView observation_tv = ((TextView) rootView.findViewById(R.id.text_observation));
-            final TextView obs_title_tv = ((TextView) rootView.findViewById(R.id.textView4));
+
+            final EditText observation_et = ((EditText) rootView.findViewById(R.id.text_observation));
             String observation_text = curStep.getObservation();
-            if (!"".equals(observation_text)) {
-                obs_title_tv.setText("Observações");
-                observation_tv.setText("\u2022 " + observation_text);
-            } else {
-                obs_title_tv.setText("");
-                observation_tv.setText("");
-            }
+
+            //TODO para todos tratar observation_text colocar bullet depois de cada nova linha e no começo do arquivo
+            observation_et.setText(observation_text);
 
 
             final Button nextBtn = (Button) rootView.findViewById(R.id.next_step_button);
@@ -115,8 +114,16 @@ public class ExecuteStepsFragment extends Fragment {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(curDateTime);
                     String curTime = cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE);
-                    String observation = observation_tv.getText().toString();
+                    String description = description_et.getText().toString();
+                    String input = input_et.getText().toString();
+                    String output = output_et.getText().toString();
+                    String observation = observation_et.getText().toString();
+
+                    //modify the step content
                     curStep.setTime(curTime);
+                    curStep.setDescription(description);
+                    curStep.setInput(input);
+                    curStep.setOutput(output);
                     curStep.setObservation(observation);
 
                     //dinamically modify GUI to step(1) at step(size-1)
@@ -126,23 +133,16 @@ public class ExecuteStepsFragment extends Fragment {
                         curStep = steps.get(stepNumber);
 
                         String step_name = curStep.getSName();
-                        //getActivity().setTitle(selectedCerimony.getShortName() + " - " + step_name);
                         ((ExecuteSteps) getActivity()).title_toolbar.setText(selectedCerimony.getShortName() + " - " + step_name);
                         int steps_size = steps.size();
                         int display_step_number = stepNumber + 1;
                         ((ExecuteSteps) getActivity()).status_toolbar.setText("Passo " + display_step_number + " de " + steps_size);
 
-                        description_tv.setText("\u2022 " + curStep.getDescription());
-                        input_tv.setText("\u2022 " + curStep.getInput());
-                        output_tv.setText("\u2022 " + curStep.getOutput());
+                        description_et.setText("\u2022 " + curStep.getDescription());
+                        input_et.setText("\u2022 " + curStep.getInput());
+                        output_et.setText("\u2022 " + curStep.getOutput());
                         String observation_text = curStep.getObservation();
-                        if (!"".equals(observation_text)) {
-                            obs_title_tv.setText("Observações");
-                            observation_tv.setText("\u2022 " + observation_text);
-                        } else {
-                            obs_title_tv.setText("");
-                            observation_tv.setText("");
-                        }
+                        observation_et.setText("\u2022 " + observation_text);
 
                         if (stepNumber == steps.size() - 1) {
                             nextBtn.setBackgroundColor(Color.GREEN);
@@ -168,12 +168,12 @@ public class ExecuteStepsFragment extends Fragment {
                             File dir = new File(root_sd + "/ceremony-assistant/final/" + folderName);
                             dir.mkdirs();
                             try {
-//                                    file = new File(dir, selectedCerimony.getShortName().replaceAll("\\s", "") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".xml");
-//                                    file.createNewFile();
-//                                    FileOutputStream f = new FileOutputStream(file);
-//                                    String xmlData = selectedCerimony.toXML();
-//                                    f.write(xmlData.getBytes());
-//                                    f.close();
+                                File file = new File(root_sd + "/ceremony-assistant/new/", selectedCerimony.getFileName());
+                                file.createNewFile();
+                                FileOutputStream f = new FileOutputStream(file, false);
+                                String xmlData = selectedCerimony.toXML();
+                                f.write(xmlData.getBytes());
+                                f.close();
 
                                 file2 = new File(dir, selectedCerimony.getShortName().replaceAll("\\s", "") + "-" + selectedCerimony.getFinalDate().replaceAll("/", "-") + ".txt");
                                 file2.createNewFile();
@@ -191,6 +191,7 @@ public class ExecuteStepsFragment extends Fragment {
                                 startActivity(intent2);
                             } catch (IOException e) {
                                 e.printStackTrace();
+                                //Log.v("error", e.printStackTrace());
                             }
                         }
 
@@ -307,5 +308,24 @@ public class ExecuteStepsFragment extends Fragment {
             return true;
         }
         return false;
+    }
+
+    public static void copy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        try {
+            OutputStream out = new FileOutputStream(dst);
+            try {
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            } finally {
+                out.close();
+            }
+        } finally {
+            in.close();
+        }
     }
 }

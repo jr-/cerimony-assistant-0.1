@@ -15,7 +15,34 @@
             <description>Entrega dos envelopes aos membros dos grupos</description>
             <input>Envelopes lacrados com smartcards, PINs e backup de PINs</input>
             <output>Cada envelope de posse da respectiva pessoa/papel a ser desempenhado</output>
-            <observation>Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo</observation>
+            <observation>\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+\u2022 Os envelopes lacrados com os smartcards e PINs devem ser mostrados ao grupo
+        </observation>
         </step>
         <step name="Dispositivos em operação">
             <description>Colocar a máquina hospedeira e o HSM em operação</description>
@@ -27,102 +54,6 @@
             <description>Inicializar VMWare Player</description>
             <input>Ir na opção Aplicativos -> Sistema -> VMWare Player</input>
             <output>VMWare player inicializado</output>
-        </step>
-        <step name="Inicializar VM AC *">
-            <description>Inicializar VM AC * ICPEDU v1</description>
-            <input>Selecionar Ubuntu_AC_*_ICPEDU_V1 e clicar em "Play virtual machine"</input>
-            <output>Máquina virtual inicializada</output>
-            <observation>Caso apareça alguma mensagem de dispositivo da WebCam não conhecido, clicar em ok. Caso a VM não apareça listada, deve clicar em “Open Virtual Machine”, no menu à esquerda, e selecionar o arquivo  Ubuntu_AC_Raiz_ICPEDU_V1, dentro da pasta de mesmo nome.</observation>
-        </step>
-        <step name="Restaurar Backup SGCI">
-          <description>Restaurar Backup SGCI</description>
-          <input>O arquivo de Backup do SGCI</input>
-          <output>O SGCI configurado no estado do Backup</output>
-        </step>
-        <step name="Ajustar relógio da VM">
-            <description>Ajustar relógio da máquina virtual</description>
-            <input>Relógio da máquina sincronizada com Observatório Nacional</input>
-            <output>Máquina hospedeira com relógio atualizado em horário UTC</output>
-            <observation>Verificar e se necessário, acertar o relógio da máquina virtual, em horário UTC (sem aplicação de timezone). Utilizar o site: http://www.on.br; no terminal digitar: sudo date -s "AAAA-MM-DD HH:MM:SS UTC"</observation>
-        </step>
-        <step name="Acertar relógio do HSM operacional">
-            <description>Acertar relógio do HSM operacional</description>
-            <input>Em Desktop da VM clicar no icone 'conectar HSM ICPEDU'. Conectar ao HSM na opção 'Conect to HSM'.  Conferir o IP 192.168.1.1 e porta 5000. Opção System>Time no cliente java do HSM</input>
-            <output>Relógio acertado</output>
-            <observation>Utilizar a interface remota do HSM para verificar o horário do HSM e se necessário corrigi-lo. ATENÇÃO: UTC. Sugestão: Definir 2 minutos a mais do que o relógio da máquina hospedeira. Pressionar o "Define HSM time" no momento em que o relógio da máquina hospedeira marcar a hora definida para o relogio do HSM. O "OK" para o PIN do segundo administrador deve ser dado apenas quando a hora da máquina hospedeira indicar 10 segundos a menos do que hora definida para o HSM. Conferir se o endereço IP da interface de rede ligada ao HSM é 192.168.1.5</observation>
-        </step>
-        <step name="Liberar a chave privada">
-            <description>Liberar a chave privada da AC Raiz para uso</description>
-            <input>Em HSM operacional Accounts and Keys > Keys > Load Key. Parametros Chave-ac-*-icpedu, numero de usos = 100, tempo infinito. Clicar em "Load Key"</input>
-            <output>Chave Chave-ac-*-icpedu carregada. Number of Keys:100 Time to use: infinito</output>
-            <observation>A chave privada será usada pelo SGCI para assinar o certificado e gerar a LCR</observation>
-        </step>
-        <step name="Criar pasta na máquina virtual">
-            <description>Criar pasta na máquina virtual</description>
-            <input>Logado na VM com o usuário icpedu do SO</input>
-            <output>Pasta criada</output>
-            <observation>Criar no desktop com o nome Cerimonia-emissao-LCR#-DD-MM-AAAA</observation>
-        </step>
-        <step name="Ativar Banco de Dados">
-            <description>Ativar Banco de Dados Postgres manualmente</description>
-            <input>No terminal digite os seguintes comandos: $ sudo -s  $mkdir /var/run/postgresql $chown postgres:postgres /var/run/post-gresql #su - postgres $pg_ctl -D /opt/postgresql-8.2.6/data -l icpedubd.log start</input>
-            <output>Server Starting, Banco de Dados iniciado</output>
-        </step>
-        <step name="Emitir a LCR">
-            <description>Emitir a LCR</description>
-            <input>Abrir navegador firefox; Logar como oper-ac-* LCRs->Gerar Lista de Certificados revogados ->  Informe número de dias -> Informe senha do Operador -> Gerar LCR Periodo de validade: 112 inserir senha do operador e clicar em gerar LCR</input>
-            <output>LCR emitida</output>
-        </step>
-        <step name="Download da LCR">
-            <description>Download da LCR</description>
-            <input>Download da LCR emitida e logoff do SGCI</input>
-            <output>Arquivo lcr-ac-*.crl salvo na pasta da cerimônia. Feito logoff no SGCI</output>
-        </step>
-        <step name="Descarregar a chave da AC Raiz">
-            <description>Descarregar a chave da AC Raiz</description>
-            <input>Interface do HSM no menu Accounts and Keys->Keys->Unload Key-> Unload key</input>
-            <output>Chave da AC Raiz descarregada</output>
-        </step>
-        <step name="Fazer backup do HSM">
-            <description>Fazer backup do HSM</description>
-            <input>Realizar a cópia de backup. Accounts Keys -> Administrator -> Backups -> Create Backup</input>
-            <output>Arquivo de backup do HSM operacional salvo na pasta da cerimônia</output>
-        </step>
-        <step name="Desligar o HSM">
-            <description>Desligar o HSM</description>
-            <input>Interface do HSM no menu System -> Shutdown -> shutdown HSM</input>
-            <output>HSM desligado</output>
-        </step>
-        <step name="Fazer backup do SGCI">
-            <description>Fazer backup do SGCI</description>
-            <input>Login com usuário criador no SGCI; criador -> backup -> digitar senha do criador -> arquivo para download -> Botão direito do mouse -> Save as -> Seleciona pasta</input>
-            <output>Arquivo de backup do SGCI salvo na pasta da cerimônia. Feito Logoff no SGCI</output>
-        </step>
-        <step name="Gerar hash dos arquivos">
-          <description>Gerar hash dos arquivos gerados na cerimônia</description>
-          <input>No caminho da pasta da cerimônia utilizar o comando: sha1sum * > hash.txt</input>
-          <output>Hash gerado dentro da pasta da cerimônia no arquivo hash.txt</output>
-        </step>
-        <step name="Copiar arquivos para o aplicativo">
-            <description>Copiar arquivos da pasta da cerimônia pro aplicativo</description>
-            <input>Copiar os arquivos da pasta de cerimônia para a pasta criada no aplicativo para a cerimônia</input>
-            <output>Arquivos salvos na pasta do aplicativo</output>
-        </step>
-        <step name="Desligar a VM">
-            <description>Desligar a VM</description>
-            <input>Máquina Virtual ligada</input>
-            <output>Maquina Virtual desligada</output>
-        </step>
-        <step name="Desligar a Maquina Hospedeira">
-            <description>Desligar a Maquina Hospedeira</description>
-            <input>Maquina Hospedeira ligada</input>
-            <output>Maquina hospedeira desligada</output>
-        </step>
-        <step name="Guardar novamente os smartcards">
-            <description>Guardar novamente os smartcards</description>
-            <input>Envelopes e smartcards</input>
-            <output>Envelopes lacrados e assinados</output>
-            <observation>Os membros de todos os grupos devem colocar os smartcards em envelopes, com seus respectivos PINS, lacrá-los, datá-los e assiná-los</observation>
         </step>
     </steps>
 </cerimony>

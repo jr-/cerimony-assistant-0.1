@@ -46,6 +46,7 @@ public class CerimonyDetailsFragment extends Fragment {
             CCerimonies.getInstance().setSelectedCerimony(cerimonyFileName);
             cerimony = CCerimonies.getInstance().getCerimonies().get(cerimonyFileName);
             cerimony = CerimonyXmlPullParser.getCerimonyFromFile(getActivity(), "new/"+cerimonyFileName, cerimony);
+            cerimony.setFileName(cerimonyFileName);
 
             //dinamically modify GUI
             String format_title = "Abertura da Ata" + " - " + cerimony.getShortName();
