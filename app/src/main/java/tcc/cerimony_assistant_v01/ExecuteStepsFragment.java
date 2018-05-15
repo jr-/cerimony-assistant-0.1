@@ -1,5 +1,6 @@
 package tcc.cerimony_assistant_v01;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,10 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +41,12 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class ExecuteStepsFragment extends Fragment {
+
+
+//    private ArrayAdapter<String> mListStepsAdapter;
+    private StepsListAdapter mStepsListAdapter;
+    private ListView mListStepsView;
+
     private boolean first_time = true;
     public ExecuteStepsFragment() {
     }
@@ -87,13 +97,13 @@ public class ExecuteStepsFragment extends Fragment {
             //dinamically modify GUI to step(0)
 
             final EditText description_et = ((EditText) rootView.findViewById(R.id.description_text));
-            description_et.setText("\u2022 " + curStep.getDescription());
+            description_et.setText(curStep.getDescription());
 
             final EditText input_et = ((EditText) rootView.findViewById(R.id.text_input));
-            input_et.setText("\u2022 " + curStep.getInput());
+            input_et.setText(curStep.getInput());
 
             final EditText output_et = ((EditText) rootView.findViewById(R.id.text_output));
-            output_et.setText("\u2022 " + curStep.getOutput());
+            output_et.setText(curStep.getOutput());
 
 
             final EditText observation_et = ((EditText) rootView.findViewById(R.id.text_observation));
@@ -101,6 +111,26 @@ public class ExecuteStepsFragment extends Fragment {
 
             //TODO para todos tratar observation_text colocar bullet depois de cada nova linha e no começo do arquivo
             observation_et.setText(observation_text);
+
+
+            final List<StepVisual> stepsVisualList = new ArrayList<>();
+            for ( int i=0; i < steps.size(); i++) {
+                String stepName = steps.get(i).getSName();
+                StepVisual cur_step_visual = new StepVisual(stepName, false);
+                stepsVisualList.add(cur_step_visual);
+            }
+
+//            mListStepsAdapter =
+//                    new ArrayAdapter<String>(
+//                            getActivity(),
+//                            R.layout.list_item_steps,
+//                            R.id.list_item_steps_textview,
+//                            stepsList
+//                    );
+            mStepsListAdapter = new StepsListAdapter(stepsVisualList, getActivity());
+
+            mListStepsView = (ListView) rootView.findViewById(R.id.listview_steps);
+            mListStepsView.setAdapter(mStepsListAdapter);
 
 
             final Button nextBtn = (Button) rootView.findViewById(R.id.next_step_button);
@@ -127,6 +157,8 @@ public class ExecuteStepsFragment extends Fragment {
                     curStep.setObservation(observation);
 
                     //dinamically modify GUI to step(1) at step(size-1)
+                    stepsVisualList.get(stepNumber).setExecuted(true);
+                    mStepsListAdapter.notifyDataSetChanged();
                     stepNumber++;
                     selectedCerimony.setCurrentStepNumber(stepNumber);
                     if (stepNumber < steps.size()) {
@@ -138,11 +170,11 @@ public class ExecuteStepsFragment extends Fragment {
                         int display_step_number = stepNumber + 1;
                         ((ExecuteSteps) getActivity()).status_toolbar.setText("Passo " + display_step_number + " de " + steps_size);
 
-                        description_et.setText("\u2022 " + curStep.getDescription());
-                        input_et.setText("\u2022 " + curStep.getInput());
-                        output_et.setText("\u2022 " + curStep.getOutput());
+                        description_et.setText(curStep.getDescription());
+                        input_et.setText(curStep.getInput());
+                        output_et.setText(curStep.getOutput());
                         String observation_text = curStep.getObservation();
-                        observation_et.setText("\u2022 " + observation_text);
+                        observation_et.setText(observation_text);
 
                         if (stepNumber == steps.size() - 1) {
                             nextBtn.setBackgroundColor(Color.GREEN);
@@ -280,6 +312,53 @@ public class ExecuteStepsFragment extends Fragment {
                     });
 
                     builder.show();
+                }
+            });
+
+            final Button prev_btn = (Button) rootView.findViewById(R.id.prev_step_button);
+            prev_btn.setOnClickListener(new View.OnClickListener() {
+                //            @Override
+                public void onClick(View v) {
+                    if(stepNumber > 0) {
+                        //modify the step content
+                        String description = description_et.getText().toString();
+                        String input = input_et.getText().toString();
+                        String output = output_et.getText().toString();
+                        String observation = observation_et.getText().toString();
+                        curStep.setDescription(description);
+                        curStep.setInput(input);
+                        curStep.setOutput(output);
+                        curStep.setObservation(observation);
+
+                        //dinamically modify GUI to step(1) at step(size-1)
+                        stepNumber--;
+                        stepsVisualList.get(stepNumber).setExecuted(false);
+                        mStepsListAdapter.notifyDataSetChanged();
+                        mListStepsView.getChildAt(stepNumber).setBackgroundColor(android.R.drawable.btn_default);
+                        selectedCerimony.setCurrentStepNumber(stepNumber);
+                        if (stepNumber < steps.size()) {
+                            curStep = steps.get(stepNumber);
+
+                            String step_name = curStep.getSName();
+                            ((ExecuteSteps) getActivity()).title_toolbar.setText(selectedCerimony.getShortName() + " - " + step_name);
+                            int steps_size = steps.size();
+                            int display_step_number = stepNumber + 1;
+                            ((ExecuteSteps) getActivity()).status_toolbar.setText("Passo " + display_step_number + " de " + steps_size);
+
+                            //bullet code "\u2022 "
+                            description_et.setText(curStep.getDescription());
+                            input_et.setText(curStep.getInput());
+                            output_et.setText(curStep.getOutput());
+                            String observation_text = curStep.getObservation();
+                            observation_et.setText(observation_text);
+
+                            if (stepNumber == steps.size() - 2) {
+                                nextBtn.setBackgroundColor(Color.LTGRAY);
+                                nextBtn.setText("Avançar");
+                            }
+                        }
+                    }
+
                 }
             });
         }

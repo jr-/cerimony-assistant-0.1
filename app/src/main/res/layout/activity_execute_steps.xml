@@ -53,8 +53,6 @@
             android:layout_height="match_parent"
             android:baselineAligned="false">
 
-            <include
-                layout="@layout/content_list_steps" />
             <include layout="@layout/content_execute_steps" />
 
         </LinearLayout>
