@@ -45,7 +45,7 @@ public class StepsListAdapter extends BaseAdapter {
         View view = activity.getLayoutInflater()
                 .inflate(R.layout.list_item_steps, parent, false);
 
-        EditText stepName_tv = (EditText) view.findViewById(R.id.list_item_steps_textview);
+        TextView stepName_tv = (TextView) view.findViewById(R.id.list_item_steps_textview);
         stepName_tv.setText(stepName);
         if(cur_step_visual.isExecuted()){
             stepName_tv.setBackgroundColor(Color.LTGRAY);

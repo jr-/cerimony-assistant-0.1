@@ -31,18 +31,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
-                    android:text="Remover"
-                    android:layout_width="100px"
-                    android:layout_height="100px"
-                    android:background="#fd0101"
-                    android:id="@+id/remove_step_button"/>
+                <!--<Button-->
+                    <!--android:text="Remover"-->
+                    <!--android:layout_width="100px"-->
+                    <!--android:layout_height="100px"-->
+                    <!--android:background="#fd0101"-->
+                    <!--android:id="@+id/remove_step_button"/>-->
 
-                <Button
-                    android:text="Adicionar"
-                    android:layout_width="100px"
-                    android:layout_height="100px"
-                    android:id="@+id/add_step_button"/>
+                <!--<Button-->
+                    <!--android:text="Adicionar"-->
+                    <!--android:layout_width="100px"-->
+                    <!--android:layout_height="100px"-->
+                    <!--android:id="@+id/add_step_button"/>-->
 
             </LinearLayout>
 
