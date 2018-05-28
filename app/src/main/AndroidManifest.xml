@@ -47,7 +47,8 @@
             android:label="@string/title_activity_execute_steps"
             android:parentActivityName=".CerimonyDetails"
             android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tcc.cerimony_assistant_v01.CerimonyDetails" />
